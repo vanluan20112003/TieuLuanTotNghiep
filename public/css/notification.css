@@ -1,0 +1,77 @@
+/* Tổng quan về các thông báo */
+.notification-box {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.notification-box.unread {
+    background-color: #e9f5ff;
+    font-weight: bold;
+}
+
+.notification-box.read {
+    opacity: 0.6;
+    background-color: #f8f9fa;
+}
+
+/* CSS cho từng loại thông báo */
+.notification-box.promotion {
+    border-left: 5px solid #28a745;
+}
+
+.notification-box.notification {
+    border-left: 5px solid #007bff;
+}
+
+.notification-box.warning {
+    border-left: 5px solid #ffc107;
+}
+
+.notification-box i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.notification-box p {
+    flex-grow: 1;
+}
+
+.btn-mark-read {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabs {
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.tab-button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}

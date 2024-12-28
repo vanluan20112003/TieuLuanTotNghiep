@@ -1,0 +1,52 @@
+.speech-button {
+    width: 80px;
+    height: 80px;
+    background-color: #f1c40f;
+    border-radius: 50%;
+    position: fixed;
+    right: 20px;
+    top: 70%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: background-color 0.3s;
+}
+
+.speech-button:hover {
+    background-color: #f39c12;
+}
+
+.speech-button i {
+    color: white;
+}
+
+/* Cách di chuyển button */
+.draggable {
+    cursor: move;
+}
+
+/* Cập nhật vị trí của ô tròn số thông báo */
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    display: none;
+    /* Ẩn mặc định */
+}
+
+/* Hiển thị số lượng thông báo khi có thông báo */
+.notification-count.visible {
+    display: block;
+}

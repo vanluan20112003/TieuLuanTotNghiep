@@ -1,0 +1,20 @@
+.notification-link {
+    position: relative;
+}
+
+.dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    display: none;
+    /* Ẩn dấu chấm đỏ khi không có thông báo */
+}
+
+.dot.show {
+    display: block;
+    /* Hiển thị dấu chấm đỏ khi có thông báo */
+}

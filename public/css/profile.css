@@ -1,0 +1,797 @@
+.balance-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* Cần thiết để điều chỉnh vị trí của icon */
+}
+
+#balanceText {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+#toggleBalance {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #333;
+    position: relative;
+    top: -7px;
+    /* Đẩy biểu tượng con mắt lên một chút */
+}
+
+.profile-pic-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-top: -75px;
+    margin-right: 20px;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+}
+
+.edit-profile-pic {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-profile-pic svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+#profile-pic-input {
+    display: none;
+}
+
+/* Mặc định cho modal */
+.profile {
+    flex: 3;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.cover-photo {
+    height: 200px;
+    background-image: url('https://via.placeholder.com/1000x200');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px 8px 0 0;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-top: -75px;
+    margin-right: 20px;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-status {
+    font-size: 14px;
+    color: #65676B;
+}
+
+.profile-stats {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.stat {
+    margin-right: 20px;
+}
+
+.info-section {
+    margin-bottom: 20px;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background-color: #E4E6EB;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.info-item {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    width: 150px;
+    font-weight: bold;
+}
+
+.progress-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(#4CAF50 0deg, #E0E0E0 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.progress-inner {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.completion-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.completion-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.completion-bar {
+    width: 100px;
+    height: 5px;
+    background-color: #E0E0E0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.completion-progress {
+    height: 100%;
+    background-color: #4CAF50;
+}
+
+/* Mặc định cho modal */
+.modal {
+    display: none;
+    /* Ẩn modal mặc định */
+    position: fixed;
+    /* Đặt ở vị trí cố định */
+    z-index: 1000;
+    /* Để modal ở trên cùng */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Chiếm toàn bộ chiều rộng */
+    height: 100%;
+    /* Chiếm toàn bộ chiều cao */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Nền tối với độ mờ */
+}
+
+/* Nội dung modal */
+.modal-content {
+    background-color: #fff;
+    /* Nền trắng cho nội dung */
+    margin: 15% auto;
+    /* Đặt giữa màn hình */
+    padding: 20px;
+    border: 1px solid #888;
+    /* Viền cho nội dung */
+    width: 300px;
+    /* Chiều rộng của modal */
+    border-radius: 8px;
+    /* Bo tròn góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Đổ bóng cho modal */
+}
+
+/* Nút đóng */
+.close {
+    color: #aaa;
+    /* Màu chữ cho nút đóng */
+    float: right;
+    /* Đặt ở bên phải */
+    font-size: 28px;
+    /* Kích thước chữ */
+    font-weight: bold;
+    /* Chữ đậm */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    /* Màu khi hover */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    cursor: pointer;
+    /* Thay đổi con trỏ khi hover */
+}
+
+/* Định dạng nhóm nhập */
+.input-group {
+    margin-bottom: 15px;
+    /* Khoảng cách giữa các nhóm */
+}
+
+/* Định dạng ô nhập */
+input[type="password"] {
+    width: 100%;
+    /* Chiều rộng đầy đủ */
+    padding: 10px;
+    /* Khoảng cách bên trong */
+    border: 1px solid #ccc;
+    /* Viền xám nhạt */
+    border-radius: 4px;
+    /* Bo tròn góc */
+    font-size: 16px;
+    /* Kích thước chữ */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng nhẹ bên trong */
+}
+
+/* Nút xác nhận */
+.btn {
+    background-color: #4CAF50;
+    /* Màu nền nút */
+    color: white;
+    /* Màu chữ */
+    border: none;
+    /* Bỏ viền */
+    padding: 10px;
+    /* Khoảng cách bên trong */
+    border-radius: 4px;
+    /* Bo tròn góc */
+    cursor: pointer;
+    /* Con trỏ khi hover */
+    transition: background-color 0.3s;
+    /* Hiệu ứng chuyển màu */
+}
+
+.btn:hover {
+    background-color: #45a049;
+    /* Màu khi hover */
+}
+
+.header {
+    background-color: #fff;
+    /* Màu nền sáng */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng nhẹ */
+    padding: 10px 20px;
+    /* Khoảng cách bên trong */
+}
+
+.header .flex {
+    display: flex;
+    align-items: center;
+    /* Canh giữa theo chiều dọc */
+    justify-content: space-between;
+    /* Tách đều giữa các phần tử */
+}
+
+.logo {
+    font-size: 24px;
+    color: #4CAF50;
+    /* Màu xanh lá */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+}
+
+.navbar {
+    display: flex;
+    gap: 15px;
+    /* Khoảng cách giữa các liên kết */
+}
+
+.navbar a {
+    color: #333;
+    /* Màu chữ liên kết */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    padding: 8px 12px;
+    /* Khoảng cách bên trong */
+    border-radius: 4px;
+    /* Bo tròn góc */
+    transition: background-color 0.3s;
+    /* Hiệu ứng chuyển màu */
+}
+
+.navbar a:hover {
+    background-color: #f0f0f0;
+    /* Màu nền khi hover */
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    /* Canh giữa các biểu tượng */
+    gap: 20px;
+    /* Khoảng cách giữa các biểu tượng */
+}
+
+.icon {
+    position: relative;
+    /* Để có thể định vị các phần tử bên trong */
+}
+
+.notification-icon {
+    cursor: pointer;
+    /* Thay đổi con trỏ khi hover */
+}
+
+.notification-dropdown {
+    display: none;
+    /* Ẩn thông báo mặc định */
+    position: absolute;
+    background-color: white;
+    /* Nền trắng cho dropdown */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng cho dropdown */
+    right: 0;
+    top: 40px;
+    /* Đặt cách xa biểu tượng thông báo */
+    padding: 10px;
+    /* Khoảng cách bên trong */
+    z-index: 10;
+    /* Để dropdown ở trên */
+}
+
+.notification-icon:hover .notification-dropdown {
+    display: block;
+    /* Hiện dropdown khi hover */
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    /* Bo tròn cho avatar */
+    object-fit: cover;
+    /* Đảm bảo hình ảnh không bị méo */
+}
+
+.user-default {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #ddd;
+    /* Màu nền cho avatar mặc định */
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    /* Sắp xếp theo chiều dọc */
+    align-items: flex-end;
+    /* Canh bên phải */
+}
+
+.name {
+    font-weight: bold;
+    /* Chữ đậm cho tên người dùng */
+}
+
+.btn-header {
+    background-color: #00FF00;
+    /* Màu đỏ cho nút đăng xuất */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s;
+}
+
+
+.delete-btn:hover {
+    background-color: #e53935;
+    /* Màu khi hover */
+}
+
+.pagination-container {
+    display: flex;
+    /* Sử dụng flexbox để căn chỉnh */
+    justify-content: space-between;
+    /* Phân phối không gian giữa các phần tử */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+}
+
+.btn-export {
+    background-color: #4CAF50;
+    /* Màu nền */
+    color: white;
+    /* Màu chữ */
+    border: none;
+    /* Bỏ viền */
+    padding: 5px 10px;
+    /* Khoảng cách bên trong */
+    text-align: center;
+    /* Canh giữa văn bản */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    display: inline-block;
+    /* Để có thể định dạng như nút */
+    font-size: 14px;
+    /* Kích thước chữ */
+    margin-left: 10px;
+    /* Khoảng cách bên trái */
+    cursor: pointer;
+    /* Hiển thị con trỏ chuột khi di chuột vào */
+    border-radius: 5px;
+    /* Bo tròn góc */
+}
+
+.pagination {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination li a {
+    padding: 8px 12px;
+    /* Kích thước nút */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    color: #007bff;
+    /* Màu chữ mặc định */
+    border: 1px solid #007bff;
+    /* Viền mặc định */
+    border-radius: 4px;
+    /* Bo tròn góc */
+    margin: 0 2px;
+    /* Khoảng cách giữa các nút */
+}
+
+.pagination li.active a {
+    background-color: #007bff;
+    /* Màu nền khi nút được chọn */
+    color: white;
+    /* Màu chữ khi nút được chọn */
+    border: 1px solid #0056b3;
+    /* Màu viền khi nút được chọn */
+}
+
+.pagination li.disabled a {
+    color: #ccc;
+    /* Màu chữ cho nút bị vô hiệu hóa */
+    pointer-events: none;
+    /* Không cho phép click */
+}
+
+
+.card-actions {
+    display: flex;
+    text-align: center;
+    margin-top: 20px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 50%;
+    /* Phần các nút chiếm 30% chiều rộng */
+
+    flex-direction: column;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Căn hai phần tử theo chiều dọc */
+    margin-bottom: 20px;
+}
+
+.card-actions .btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #0b7dda;
+}
+
+.btn-tertiary {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-tertiary:hover {
+    background-color: #da190b;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#pinInputs,
+#pinInputsConfirm {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.pin-input,
+.pin-input-confirm {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pin-input:focus,
+.pin-input-confirm:focus {
+    border-color: #007bff;
+    /* Màu viền khi ô nhập được chọn */
+    outline: none;
+    /* Xóa viền mặc định */
+}
+
+#confirmModal {
+    display: none;
+    /* Bắt đầu với modal ẩn */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    /* Đảm bảo modal nằm trên các phần tử khác */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.qr-code-icon {
+    position: absolute;
+    /* Định vị mã QR */
+    top: 10px;
+    /* Căn chỉnh với góc trên */
+    right: 10px;
+    /* Căn chỉnh với góc bên phải */
+    width: 50px;
+    /* Kích thước của mã QR */
+    height: auto;
+    /* Tự động điều chỉnh chiều cao */
+}
+
+.card {
+
+    position: relative;
+    /* Để mã QR có thể được định vị chính xác */
+    height: 200px;
+    width: 400px;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #e0f7fa;
+    /* Màu xanh nhạt */
+    padding: 20px;
+    position: fixed;
+    /* Cố định vị trí sidebar */
+    height: 100vh;
+    /* Chiều cao toàn màn hình */
+    overflow-y: auto;
+    /* Tự động cuộn nếu nội dung quá dài */
+}
+
+.time-selection {
+    margin-bottom: 15px;
+}
+
+.time-selection input[type="radio"] {
+    margin-right: 5px;
+}
+
+.time-selection label {
+    margin-right: 20px;
+    font-size: 14px;
+    color: #00796b;
+}
+
+.chart {
+    width: 100%;
+    /* Đặt chiều rộng cho biểu đồ */
+    height: 400px;
+    /* Chiều cao cho biểu đồ */
+}
+
+#myChart {
+    max-width: 100%;
+    /* Đảm bảo biểu đồ không vượt quá chiều rộng của cha */
+}
+
+.area-chart {
+    height: 400px;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 270px;
+    /* Đẩy phần nội dung sang phải để không đè lên sidebar */
+    background-color: white;
+    min-height: 100vh;
+    /* Đảm bảo chiều cao tối thiểu là toàn màn hình */
+}
+
+.tabs {
+    list-style: none;
+    padding: 0;
+}
+
+.tabs li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #cce7e5;
+    transition: background-color 0.3s;
+}
+
+.tabs li:hover {
+    background-color: #b2ebf2;
+    /* Màu xanh nhạt hơn khi hover */
+}
+
+.tabs li.active {
+    background-color: #4dd0e1;
+    /* Màu xanh đậm cho tab đang chọn */
+    color: white;
+}
+
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* CSS cho phần tổng quan giống hình ảnh đã cung cấp */
+.summary,
+.recent-transactions,
+.weekly-activity,
+.expense-statistics {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #e0f7fa;
+}
+
+.card {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #00FFFF;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card-details {
+    flex: 1;
+}
+
+.card-icon img {
+    width: 50px;
+    /* Thay đổi kích thước biểu tượng thẻ */
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #00796b;
+    /* Màu sắc tiêu đề */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+ul li span {
+    float: right;
+    color: #888;
+}
+
+.chart,
+.pie-chart {
+    height: 300px;
+    /* Kích thước cho biểu đồ */
+    background-color: #f0f8ff;
+    /* Màu nền cho biểu đồ */
+    border-radius: 8px;
+}

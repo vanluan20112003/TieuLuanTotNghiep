@@ -1,0 +1,245 @@
+#chatButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #0084ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#chatButton i {
+    color: white;
+    font-size: 24px;
+}
+
+/* Chatbox popup */
+#chatBox {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* Chat header */
+#chatHeader {
+    background-color: #0084ff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Chat body */
+#chatBody {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.preset-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.preset-questions button {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.preset-questions button:hover {
+    background-color: #dcdcdc;
+}
+
+/* Chat input */
+#chatInputContainer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+#chatInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+#sendButton {
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Message bubbles */
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+
+.bot-message {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.unread-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+.chatButton.has-unread .notification-dot {
+    display: block;
+    /* Hiển thị dấu chấm nếu có tin nhắn chưa đọc */
+}
+
+.message.user-message {
+    background-color: #d0f0c0;
+    /* Màu xanh nhạt cho tin nhắn của người dùng */
+    color: #000;
+}
+
+.message.user-message {
+    background-color: #d0f0c0;
+    /* Màu xanh nhạt cho tin nhắn của người dùng */
+    color: #000;
+}
+
+.message.admin-message {
+    background-color: #ffffff;
+    /* Màu trắng cho tin nhắn của admin */
+    color: #000;
+}
+
+/* Tùy chỉnh màu sắc khác nếu cần */
+
+/* Preset questions */
+.preset-questions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+
+.preset-questions button {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.preset-questions button:hover {
+    background-color: #dcdcdc;
+}
+
+.box-container .box .price {
+    font-size: 18px;
+    color: #ff5722;
+}
+
+.box-container .box .discount-price {
+    text-decoration: line-through;
+    margin-left: 10px;
+    color: #999;
+}
+
+.box-container .box .sale {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #4caf50;
+
+    /* Đảm bảo rằng hình ảnh nằm trong khung của slide */
+    /* Đảm bảo rằng hình ảnh nằm trong khung của slide */
+    .swiper-slide .box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .swiper-slide .image-container {
+        width: 100px;
+        /* Kích thước mong muốn */
+        height: 100px;
+        /* Kích thước mong muốn */
+        overflow: hidden;
+        /* Ẩn phần hình ảnh vượt ra ngoài khung */
+        margin: 0 auto;
+        /* Căn giữa phần tử */
+    }
+
+    .swiper-slide .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Giữ tỷ lệ hình ảnh và lấp đầy khung */
+    }
+
+    .swiper-slide h3 {
+        margin-top: 10px;
+        /* Điều chỉnh khoảng cách giữa hình ảnh và tiêu đề */
+    }
+
+
+}
+
+.box-container .box .name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.box-container .box .cat {
+    font-size: 14px;
+    color: #9c27b0;
+
+    #user-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.user-avatar {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    object-fit: cover;
+}

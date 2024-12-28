@@ -1,0 +1,62 @@
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 5px 10px;
+    /* Giảm padding cho nút */
+    font-size: 12px;
+    /* Điều chỉnh kích thước chữ nhỏ hơn */
+    border-radius: 5px;
+    /* Làm nút tròn hơn */
+    border: none;
+    /* Loại bỏ viền nút */
+    cursor: pointer;
+    /* Thêm con trỏ khi hover */
+    transition: background-color 0.3s ease;
+    /* Hiệu ứng khi di chuột */
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    /* Màu nền đỏ cho nút xóa */
+    color: white;
+    /* Màu chữ trắng */
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    /* Màu nền xanh cho nút hoàn thành */
+    color: white;
+    /* Màu chữ trắng */
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    /* Màu nền khi hover cho nút xóa */
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+    /* Màu nền khi hover cho nút hoàn thành */
+}
+
+form {
+    display: inline-block;
+    margin: 0 5px;
+    /* Thêm khoảng cách giữa các form chứa nút */
+}
