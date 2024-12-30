@@ -3354,9 +3354,218 @@ table th {
     background: rgba(0,0,0,0.3);
     z-index: 999;
 }
+.toolbar-btn {
+    position: relative; /* Đặt vị trí của button ở dạng relative để chứa chấm đỏ */
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dot {
+    position: absolute; /* Đặt vị trí của dot ở trong button */
+    top: 5px;           /* Khoảng cách từ phía trên của button */
+    right: 5px;         /* Khoảng cách từ phía phải của button */
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* Ẩn mặc định */
+    z-index: 10;    /* Đảm bảo chấm đỏ hiển thị trên các phần tử khác trong button */
+}
+.PendingTransaction-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto; /* Thêm dòng này để trang có thể cuộn nếu modal lớn hơn viewport */
+}
+
+.PendingTransaction-modalContent {
+    position: relative;
+    background-color: #fff;
+    margin: 2% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh; /* Giới hạn chiều cao modal */
+    overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung vượt quá chiều cao */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: PendingTransactionFadeIn 0.3s;
+}
+
+.PendingTransaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.PendingTransaction-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.PendingTransaction-closeBtn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.PendingTransaction-body {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    height: 70vh;
+}
+
+.PendingTransaction-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+    border-right: 1px solid #eee;
+}
+
+.PendingTransaction-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.PendingTransaction-item:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.PendingTransaction-item.active {
+    border-color: #007bff;
+    background-color: #f8f9fa;
+}
+
+.PendingTransaction-details {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.PendingTransaction-detailsGroup {
+    margin-bottom: 15px;
+}
+
+.PendingTransaction-detailsLabel {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.PendingTransaction-detailsValue {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.PendingTransaction-proofImage {
+    max-width: 200px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.2s;
+}
+
+.PendingTransaction-proofImage:hover {
+    transform: scale(1.05);
+}
+
+.PendingTransaction-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.PendingTransaction-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.PendingTransaction-btnApprove {
+    background-color: #28a745;
+    color: white;
+}
+
+.PendingTransaction-btnReject {
+    background-color: #dc3545;
+    color: white;
+}
+
+.PendingTransaction-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.PendingTransaction-imageModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.PendingTransaction-imageModal img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+@keyframes PendingTransactionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.PendingTransaction-emptyDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+}
+
+.PendingTransaction-emptyDetails i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #ddd;
+}
     </style>
 </head>
-<body>
+<div>
 <button id="toggle-menu" class="toggle-button">☰</button>
 <div class="sidebar">
 <a href="http://localhost/web_ban_banh_kem/public/" >
@@ -3489,6 +3698,10 @@ table th {
     <!-- Thêm 2 nút mới -->
     <button class="toolbar-btn" onclick="openReportFinanceModal()"> 
     <i class="fas fa-chart-bar"></i> Báo Cáo Tài Chính
+</button>
+<button class="toolbar-btn" onclick="openPendingTransactionModal()"> 
+    <i class="fas fa-chart-bar"></i> Yêu cầu nạp/rút
+    <span id="pending-dot" class="dot"></span> <!-- Chấm đỏ sẽ hiển thị nếu có giao dịch pending -->
 </button>
 
 </div>
@@ -3706,8 +3919,8 @@ table th {
 </div>
     </div>
     </div>
-  </div>
-</div>
+ 
+
 <div class="modal-backdrop" id="modalBackdrop"></div>
 <div class="finance-modal" id="financeModal">
     <h4>Chọn khoảng thời gian báo cáo</h4>
@@ -3724,7 +3937,33 @@ table th {
         <button class="btn btn-secondary" onclick="closeFinanceModal()">Đóng</button>
         <button class="btn btn-primary" onclick="generateReport()">Xuất báo cáo</button>
     </div>
+    </div>
+    <div id="PendingTransactionModal" class="PendingTransaction-modal">
+    <div class="PendingTransaction-modalContent">
+        <div class="PendingTransaction-header">
+            <h2 class="PendingTransaction-title">Yêu cầu nạp/rút tiền</h2>
+            <button class="PendingTransaction-closeBtn" onclick="closePendingTransactionModal()">&times;</button>
+        </div>
+        <div class="PendingTransaction-body">
+            <div class="PendingTransaction-list" id="PendingTransactionList">
+                <!-- Transaction items will be inserted here -->
+            </div>
+            <div class="PendingTransaction-details" id="PendingTransactionDetails">
+                <div class="PendingTransaction-emptyDetails">
+                    <i class="fas fa-inbox"></i>
+                    <p>Chọn một giao dịch để xem chi tiết</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Image Modal -->
+<div id="PendingTransactionImageModal" class="PendingTransaction-imageModal" onclick="closePendingTransactionImageModal()">
+    <img id="PendingTransactionEnlargedImage" src="" alt="Proof of transaction">
+</div>
+</div>
+
     <script>
         // Sample data for the chart
        
@@ -4688,6 +4927,287 @@ fetch('http://localhost/web_ban_banh_kem/public/admin-info')
         .catch(error => {
             console.error('Có lỗi khi lấy dữ liệu admin:', error);
         });
+        // Giả sử bạn đã có một API hoặc một phương thức để lấy danh sách các giao dịch pending
+        function checkPendingTransactions() {
+    fetch('http://localhost/web_ban_banh_kem/public/api/check-pending-transactions')  // Đảm bảo rằng API trả về `hasPending`
+        .then(response => response.json())
+        .then(data => {
+            // Kiểm tra nếu có giao dịch pending
+            if (data.hasPending) {
+                document.getElementById('pending-dot').style.display = 'inline-block'; // Hiển thị chấm đỏ
+            } else {
+                document.getElementById('pending-dot').style.display = 'none'; // Ẩn chấm đỏ
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi khi kiểm tra giao dịch pending:", error);
+        });
+}
+
+// Gọi hàm kiểm tra trạng thái giao dịch khi tải trang
+checkPendingTransactions();
+setInterval(checkPendingTransactions, 10000);
+const pendingTransactions = [];
+
+function openPendingTransactionModal() {
+    document.getElementById('PendingTransactionModal').style.display = 'block';
+    renderPendingTransactionList();
+}
+
+function closePendingTransactionModal() {
+    document.getElementById('PendingTransactionModal').style.display = 'none';
+}
+
+function renderPendingTransactionList() {
+    const listContainer = document.getElementById('PendingTransactionList');
+    
+    // Gửi yêu cầu GET đến API
+    fetch('http://localhost/web_ban_banh_kem/public/api/pending-transactions')
+        .then(response => response.json())
+        .then(data => {
+            const pendingTransactions = data.pendingTransactions;
+            
+            listContainer.innerHTML = pendingTransactions.map(transaction => `
+                <div class="PendingTransaction-item" onclick="showPendingTransactionDetails(${transaction.id})">
+                    <div style="font-weight: bold; color: ${transaction.transaction_type === 'deposit' ? '#28a745' : '#dc3545'}">
+                        ${transaction.transaction_type === 'nap' ? 'Nạp tiền' : 'Rút tiền'}
+                    </div>
+                    <div>Id thẻ:  ${transaction.the_da_nang_id}</div>
+                    <div>Số tiền giao dịch: ${transaction.amount}</div>
+                    <div style="font-size: 0.9em; color: #666;">
+                        ${new Date(transaction.created_at).toLocaleString()}
+                    </div>
+                </div>
+            `).join('');
+        })
+        .catch(error => {
+            console.error("Lỗi khi lấy giao dịch đang chờ:", error);
+        });
+}
+
+// Gọi hàm khi trang web được tải
+
+
+
+function showPendingTransactionDetails(id) {
+    // Gửi yêu cầu AJAX để lấy thông tin chi tiết giao dịch
+    fetch(`http://localhost/web_ban_banh_kem/public/pending-transaction/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.transaction) {
+                const transaction = data.transaction;
+                const detailsContainer = document.getElementById('PendingTransactionDetails');
+                
+                // Hide the empty details message
+                document.querySelector('.PendingTransaction-emptyDetails').style.display = 'none';
+                
+                // Hiển thị chi tiết giao dịch
+                detailsContainer.innerHTML = `
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Loại giao dịch</div>
+                        <div class="PendingTransaction-detailsValue">${transaction.type === 'nap' ? 'Nạp tiền' : 'Rút tiền'}</div>
+                    </div>
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Số thẻ</div>
+                        <div class="PendingTransaction-detailsValue">${transaction.cardNumber}</div>
+                    </div>
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Chủ thẻ</div>
+                        <div class="PendingTransaction-detailsValue">${transaction.cardHolder}</div>
+                    </div>
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Số dư hiện tại</div>
+                        <div class="PendingTransaction-detailsValue">${transaction.balance}</div>
+                    </div>
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Số tiền ${transaction.type === 'nap' ? 'nạp' : 'rút'}</div>
+                        <div class="PendingTransaction-detailsValue">${transaction.amount}</div>
+                    </div>
+                      ${transaction.type === 'rut' ? `
+                    <div class="PendingTransaction-detailsGroup">
+                          <div class="PendingTransaction-detailsLabel">Thông tin ngân hàng nhận tiền: </div>
+                        <div class="PendingTransaction-detailsValue">${transaction.bank_info}</div>
+                    </div>
+                    ` : ''}
+                    ${transaction.type === 'nap' ? `
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Số tiền nạp xác minh</div>
+                        <div class="PendingTransaction-detailsValue">
+                            <input 
+                                type="number" 
+                                id="rawAmount" 
+                                class="PendingTransaction-amountInput" 
+                                value="${transaction.raw_amount || transaction.amount}"
+                                min="0"
+                            >
+                        </div>
+                    </div>
+                    ` : ''}
+                    ${transaction.proofImage ? `
+                    <div class="PendingTransaction-detailsGroup">
+                        <div class="PendingTransaction-detailsLabel">Minh chứng</div>
+                        <img src="http://localhost/web_ban_banh_kem/public/images/${transaction.proofImage}" class="PendingTransaction-proofImage" onclick="showPendingTransactionImage('${transaction.proofImage}')" alt="Proof of transaction">
+                    </div>
+                    ` : ''}
+                    <div class="PendingTransaction-actions">
+                        <button class="PendingTransaction-btn PendingTransaction-btnApprove" onclick="handlePendingTransaction(${transaction.id}, 'approve')">
+                            ${transaction.type === 'nap' ? 'Xác nhận nạp' : 'Xác nhận rút'} 
+                        </button>
+                        <button class="PendingTransaction-btn PendingTransaction-btnReject" onclick="handlePendingTransaction(${transaction.id}, 'reject')">Từ chối</button>
+                    </div>
+                `;
+            } else {
+                alert("Không tìm thấy giao dịch.");
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi khi lấy chi tiết giao dịch:", error);
+            alert("Đã xảy ra lỗi khi lấy thông tin chi tiết.");
+        });
+}
+
+function showPendingTransactionImage(imageSrc) {
+    const imageModal = document.getElementById('PendingTransactionImageModal');
+    const enlargedImage = document.getElementById('PendingTransactionEnlargedImage');
+    enlargedImage.src = `http://localhost/web_ban_banh_kem/public/images/${imageSrc}`;
+
+    imageModal.style.display = 'flex';
+}
+
+function closePendingTransactionImageModal() {
+    document.getElementById('PendingTransactionImageModal').style.display = 'none';
+}
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+function handlePendingTransaction(id, action) { 
+    let reason = null;
+
+    if (action === 'reject') {
+        reason = prompt("Nhập lý do từ chối:");
+        if (!reason) {
+            alert("Bạn phải nhập lý do từ chối.");
+            return;
+        }
+    }
+
+    fetch(`http://localhost/web_ban_banh_kem/public/pending-transactions/${id}/handle`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken, // Thêm CSRF token vào headers
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: action, reason: reason }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+
+        if (action === 'approve') {
+            // Gọi API để lấy chi tiết giao dịch
+            fetch(`http://localhost/web_ban_banh_kem/public/pending-transaction/${id}`)
+                .then(response => response.json())
+                .then(transactionData => {
+                    const transaction = transactionData.transaction;
+
+                    // Kiểm tra loại giao dịch
+                    if (transaction.type === 'rut' || transaction.type === 'nap') {
+                        // Cập nhật trạng thái giao dịch thành "approved"
+                        fetch(`http://localhost/web_ban_banh_kem/public/pending-transactions/${id}/update-status`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ status: 'approved' })
+                        })
+                        .then(response => response.json())
+                        .then(updateData => {
+                            const amount = transaction.type === 'nap' 
+                                ? parseFloat(document.getElementById('rawAmount').value) 
+                                : -transaction.raw_amount;
+
+                            // Cập nhật số dư thẻ đa năng
+                            fetch(`http://localhost/web_ban_banh_kem/public/the-da-nang/${transaction.cardNumber}/update-balance`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': csrfToken,
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ amount: amount }) // Cộng/Trừ số tiền
+                            })
+                            .then(balanceUpdate => {
+                                const notificationContent = transaction.type === 'nap'
+                                    ? 'Yêu cầu nạp tiền của bạn đã được chấp thuận. Vui lòng vào thẻ đa năng kiểm tra.'
+                                    : 'Yêu cầu rút tiền của bạn đã được chấp nhận. Vui lòng đến căn tin nhận tiền hoặc chat với chúng tôi để chuyển khoản.';
+                                
+                                // Gửi thông báo cho người dùng
+                                fetch(`http://localhost/web_ban_banh_kem/public/users/${transaction.user_id}/send-notification`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': csrfToken,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        content: notificationContent,
+                                        type: 'notification',
+                                    })
+                                });
+
+                                // Tạo một giao dịch mới với loại tương ứng
+                                fetch('http://localhost/web_ban_banh_kem/public/transactions', {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': csrfToken,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        the_da_nang_id: transaction.cardNumber,
+                                        loai_giao_dich: transaction.type,
+                                        so_tien: Math.abs(amount)
+                                    })
+                                })
+                                .then(() => {
+                                    // Load lại danh sách giao dịch
+                                    renderPendingTransactionList();
+                                    document.getElementById('PendingTransactionDetails').innerHTML = `
+                                        <div class="PendingTransaction-emptyDetails">
+                                            <i class="fas fa-inbox"></i>
+                                            <p>Chọn một giao dịch để xem chi tiết</p>
+                                        </div>
+                                    `;
+                                })
+                                .catch(error => {
+                                    console.error('Lỗi khi tạo giao dịch mới:', error);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi cập nhật số dư thẻ đa năng:', error);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi cập nhật trạng thái giao dịch:', error);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy chi tiết giao dịch:", error);
+                    alert("Đã xảy ra lỗi khi lấy thông tin chi tiết.");
+                });
+        }
+    })
+    .catch(error => {
+        console.error("Lỗi:", error);
+        alert("Đã xảy ra lỗi khi xử lý giao dịch.");
+    });
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('PendingTransactionModal');
+    if (event.target === modal) {
+        closePendingTransactionModal();
+    }
+}
+
 </script>
 </script>
 </body>

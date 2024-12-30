@@ -579,9 +579,10 @@ body {
 
    <section class="flex">
 
-   <a href="{{ url('/') }}" class="logo">
+   <a href="{{ Auth::check() && Auth::user()->is_admin == 1 ? url('/admin/dashboard') : url('/') }}" class="logo">
     <img src="{{ asset('images/logocanteen.jpg') }}" alt="Logo" style="max-width: 30%; height: auto;">
 </a>
+
 
 
       <nav class="navbar">

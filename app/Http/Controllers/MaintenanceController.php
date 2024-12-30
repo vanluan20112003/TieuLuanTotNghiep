@@ -12,7 +12,7 @@ class MaintenanceController extends Controller
     public function startMaintenance(Request $request)
     {
         // Kiểm tra mật khẩu bảo trì (thay thế bằng mật khẩu bạn muốn)
-        $validPassword = 'luan20112004';
+        $validPassword = 'luan20112003';
 
         // Kiểm tra nếu mật khẩu bảo trì hợp lệ
         if ($request->password !== $validPassword) {

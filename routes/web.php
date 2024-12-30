@@ -26,6 +26,7 @@ use App\Http\Controllers\SpinHistoryController;
 use App\Http\Controllers\SpinController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FoodSuggestionController;
 use App\Http\Controllers\TheDaNangController;
@@ -43,16 +44,23 @@ use App\Http\Controllers\MaintenanceController;
 
 use App\Http\Middleware\CheckAdmin;
 Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
-
+Route::post('/handle-transaction', [TransactionController::class, 'handleTransaction'])->name('handle.transaction');
 Route::get('/orders/details/{id}', [OrderController::class, 'getOrderDetails'])->name('order.details');
 Route::get('/products/{productId}/ingredients', [IngredientController::class, 'getIngredientsOfProduct']);
 Route::post('/ingredients/update/{id}', [IngredientController::class, 'update']);
 // routes/web.php
-
-
+Route::get('/api/check-pending-transactions', [TransactionController::class, 'checkPendingTransactions']);
+// Route để lấy chi tiết giao dịch pending
+Route::get('/pending-transaction/{id}', [TransactionController::class, 'showPendingTransactionDetails']);
+Route::post('/pending-transactions/{id}/handle', [TransactionController::class, 'doneTransaction']);
+Route::post('/pending-transactions/{id}/update-status', [TransactionController::class, 'updateStatus']);
+Route::post('/the-da-nang/{id}/update-balance', [TransactionController::class, 'updateBalance']);
+Route::post('/users/{userId}/send-notification', [TransactionController::class, 'sendNotification']);
+Route::post('/transactions', [TransactionController::class, 'createTransaction']);
 // Route xóa nguyên liệu khỏi sản phẩm
 Route::delete('/products/{productId}/remove-Productingredient/{ingredientId}', [IngredientController::class, 'removeProductIngredient']);
-
+Route::delete('/pending-transaction/{id}', [TransactionController::class, 'cancelTransaction']);
+Route::get('/api/pending-transactions', [TransactionController::class, 'renderPendingTransactionList']);
 Route::get('/list-ingredients', [IngredientController::class, 'getAllIngredients']);
 Route::post('/ingredients/{id}/activate', [IngredientController::class, 'activate']);
 Route::post('/ingredients/{id}/deactivate', [IngredientController::class, 'deactivate']);
@@ -130,7 +138,7 @@ Route::post('/banner/store', [SlideController::class, 'store']);
 
 // Tạo mới một banner
 Route::post('/banner/store', [SlideController::class, 'store']);
-
+Route::post('/check-transaction-status', [TransactionController::class, 'checkTransactionStatus']);
 Route::middleware([
     'auth',
     CheckPermission::class . ':manage_system'  // Chú ý dấu chấm để nối chuỗi
@@ -139,6 +147,9 @@ Route::middleware([
         return view('layouts.admin_restore');
     })->name('admin.restore');
 });
+
+
+Route::post('/verify-pin', [TransactionController::class, 'verifyPin'])->name('verifyPin');
 Route::post('/financial-report', [FinancialStatsController::class, 'generateReport']);
 Route::get('/finance/static', [FinancialStatsController::class, 'index']);
 Route::get('/cards/user/{userId}', [TheDaNangController::class, 'getCardDetails']);
@@ -192,10 +203,13 @@ Route::post('/chat/mark-as-read', [MailChatController::class, 'markMessagesAsRea
 Route::get('/payment_info', function () {
     return view('payment_info');
 });
+
+
 Route::get('/notifications/unread', [NotificationController::class, 'getUnreadCount']);
 Route::get('/check-login-status', function () {
     return response()->json(['loggedIn' => auth::check()]);
 });
+Route::get('/withdraw', [TransactionController::class, 'withdraw'])->name('withdraw');
 Route::post('/products/{id}/restore', [RestoreController::class, 'restoreProduct']);
 Route::post('/orders/{id}/restore', [RestoreController::class, 'restoreOrder']);
 Route::get('/radio-notifications', [SpeechController::class, 'index']);
@@ -372,7 +386,7 @@ Route::middleware([
     })->name('admin.order');
 });
 Route::post('/apply-filters', [MenuController::class, 'applyFilters'])->name('apply.filters');
-
+Route::post('/getOrderAnalytics', [OrderController::class, 'getOrderAnalytics'])->name('getOrderAnalytics');
 Route::get('/get-notifications', [NotificationController::class, 'getNotifications'])->name('notifications');
 Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead1'])->name('notifications.markAsRead');
 Route::get('/check-maintenance-status', [MaintenanceController::class, 'checkMaintenanceStatus']);

@@ -166,6 +166,10 @@ public function getNotifications()
             
             $coverImage = 'http://localhost/web_ban_banh_kem/public/images/Respone.png';
         } 
+        elseif (strpos($content, 'yêu cầu') !== false) {
+            $link = route('withdraw'); // Link đến trang đơn hàng
+            $coverImage = 'http://localhost/web_ban_banh_kem/public/images/Transaction.png';
+        }
         elseif (strpos($content, 'bạn đã nhận') !== false) {
             
             $coverImage = 'http://localhost/web_ban_banh_kem/public/images/Discount.png';

@@ -989,7 +989,7 @@ button#close-report-dialog:hover {
 
     <!-- Các hành động như Nạp/Rút tiền và Đổi Mã PIN -->
     <div class="card-actions">
-        <a href="{{ url('/link_payment') }}" class="btn btn-primary">Nạp/Rút Tiền</a>
+        <a href="{{ url('/withdraw') }}" class="btn btn-primary">Nạp/Rút Tiền</a>
         <a href="#" class="btn btn-tertiary" id="change-pin-btn">Đổi Mã PIN</a>
 
         <!-- Hộp thoại đổi mã PIN -->

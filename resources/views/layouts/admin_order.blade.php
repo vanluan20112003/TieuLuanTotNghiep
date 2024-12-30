@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
@@ -2081,6 +2081,154 @@ a:hover {
 .submenu .submenu-item:hover {
     background-color: #505050; /* Đổi màu khi hover submenu con */
 }
+.orderAnalyticsModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.orderAnalyticsContent {
+    position: relative;
+    background-color: #fff;
+    margin: 2% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.orderAnalyticsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.orderAnalyticsTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.orderAnalyticsClose {
+    cursor: pointer;
+    font-size: 24px;
+    color: #6b7280;
+    transition: color 0.3s;
+}
+
+.orderAnalyticsClose:hover {
+    color: #ef4444;
+}
+
+.dateFilterContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+.dateInput {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.filterButton {
+    padding: 8px 16px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filterButton:hover {
+    background-color: #2563eb;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.statCard {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.chartsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.chartWrapper {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chartTitle {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 15px;
+}
+
+canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+@media (max-width: 768px) {
+    .chartsContainer {
+        grid-template-columns: 1fr;
+    }
+    
+    .orderAnalyticsContent {
+        width: 95%;
+        margin: 5% auto;
+    }
+    
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
     </style>
 </head>
 <body>
@@ -2385,56 +2533,56 @@ a:hover {
     </div>
 </div>
 <!-- Modal Thống kê -->
-<div id="orderStaticModal" class="orderstatic-modal">
-    <div class="orderstatic-modal-content">
-        <div class="orderstatic-modal-header">
-            <h2>Thống kê hóa đơn</h2>
-            <button class="orderstatic-close" onclick="closeModalStatic()">&times;</button>
+<div id="orderAnalyticsModal" class="orderAnalyticsModal">
+    <div class="orderAnalyticsContent">
+        <div class="orderAnalyticsHeader">
+            <h2 class="orderAnalyticsTitle">Phân tích đơn hàng</h2>
+            <span class="orderAnalyticsClose">&times;</span>
         </div>
-        <div class="orderstatic-modal-body">
-            <!-- Bộ lọc thống kê -->
-            <div class="orderstatic-filters">
-                <label for="startDate">Từ ngày:</label>
-                <input type="date" id="startDate" class="orderstatic-input">
+        
+        <div class="dateFilterContainer">
+            <input type="date" id="orderstartDate" class="dateInput">
+            <span>đến</span>
+            <input type="date" id="orderendDate" class="dateInput">
+            <button id="filterButton" class="filterButton">Lọc dữ liệu</button>
+        </div>
 
-                <label for="endDate">Đến ngày:</label>
-                <input type="date" id="endDate" class="orderstatic-input">
-
-                <label for="statusFilter">Trạng thái:</label>
-                <select id="statusFilter" class="orderstatic-select">
-                    <option value="">Tất cả</option>
-                    <option value="completed">Hoàn thành</option>
-                    <option value="pending">Đang xử lý</option>
-                    <option value="cancelled">Đã hủy</option>
-                </select>
-
-                <button class="orderstatic-btn" onclick="applyFilters()">Lọc</button>
+        <div class="statsGrid">
+            <div class="statCard">
+                <div class="statLabel">Tổng đơn hàng</div>
+                <div id="totalOrders" class="statValue">0</div>
             </div>
-
-            <!-- Khu vực biểu đồ -->
-            <div class="orderstatic-chart-container">
-                <div class="orderstatic-chart-header">
-                    <label for="chartType">Loại biểu đồ:</label>
-                    <select id="chartType" class="orderstatic-select" onchange="updateChartType()">
-                        <option value="bar">Biểu đồ cột</option>
-                        <option value="line">Biểu đồ đường</option>
-                        <option value="pie">Biểu đồ tròn</option>
-                    </select>
-                </div>
-                <canvas id="orderChart"></canvas>
-                
+            <div class="statCard">
+                <div class="statLabel">Doanh thu</div>
+                <div id="totalRevenue" class="statValue">0 ₫</div>
             </div>
-
-            <!-- Khu vực thống kê chi tiết -->
-            <div class="orderstatic-details">
-                <h3>Số liệu thống kê:</h3>
-                <ul id="orderStatsList">
-                    <!-- Thống kê sẽ được cập nhật động -->
-                </ul>
+            <div class="statCard">
+                <div class="statLabel">Giá trị TB/đơn</div>
+                <div id="avgOrderValue" class="statValue">0 ₫</div>
+            </div>
+            <div class="statCard">
+                <div class="statLabel">Số khách hàng</div>
+                <div id="uniqueCustomers" class="statValue">0</div>
             </div>
         </div>
-        <div class="orderstatic-modal-footer">
-            <button class="orderstatic-btn orderstatic-btn-close" onclick="closeModalStatic()">Đóng</button>
+
+        <div class="chartsContainer">
+            <div class="chartWrapper">
+                <h3 class="chartTitle">Đơn hàng & Doanh thu theo ngày</h3>
+                <canvas id="dailyOrdersChart"></canvas>
+            </div>
+            <div class="chartWrapper">
+                <h3 class="chartTitle">Trạng thái đơn hàng</h3>
+                <canvas id="orderStatusChart"></canvas>
+            </div>
+            <div class="chartWrapper">
+                <h3 class="chartTitle">Phân bố đơn hàng theo giờ</h3>
+                <canvas id="hourlyDistributionChart"></canvas>
+            </div>
+            <div class="chartWrapper">
+                <h3 class="chartTitle">Top 5 sản phẩm bán chạy</h3>
+                <canvas id="topProductsChart"></canvas>
+            </div>
         </div>
     </div>
 </div>
@@ -3160,76 +3308,19 @@ document.getElementById('closeModalBtn').addEventListener('click', function() {
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
 }
-let chart;
+
 
 function openModalStatic() {
-    document.getElementById('orderStaticModal').style.display = 'block';
-    loadInitialStats();
+    document.getElementById('orderAnalyticsModal').style.display = 'block';
+   
 }
 
 function closeModalStatic() {
-    document.getElementById('orderStaticModal').style.display = 'none';
+    document.getElementById('orderAnalyticsModal').style.display = 'none';
 }
-
-function loadInitialStats() {
-    // Tải dữ liệu thống kê ban đầu (ví dụ: doanh thu tổng, số hóa đơn,...)
-    fetch('http://localhost/web_ban_banh_kem/public/api/initial-stats')
-        .then(response => response.json())
-        .then(data => {
-            updateStatsList(data.stats);
-            renderChart('bar', data.chartData);
-        })
-        .catch(error => console.error('Lỗi tải thống kê:', error));
-}
-
-function applyFilters() {
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const status = document.getElementById('statusFilter').value;
-
-    const url = `http://localhost/web_ban_banh_kem/public/api/stats?start_date=${startDate}&end_date=${endDate}&status=${status}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            updateStatsList(data.stats);
-            renderChart(document.getElementById('chartType').value, data.chartData);
-        })
-        .catch(error => console.error('Lỗi áp dụng bộ lọc:', error));
-}
-
-function updateStatsList(stats) {
-    const statsList = document.getElementById('orderStatsList');
-    statsList.innerHTML = '';
-    stats.forEach(stat => {
-        const li = document.createElement('li');
-        li.textContent = `${stat.label}: ${stat.value}`;
-        statsList.appendChild(li);
-    });
-}
-
-function renderChart(type, data) {
-    const ctx = document.getElementById('orderChart').getContext('2d');
-    if (chart) chart.destroy();
-    chart = new Chart(ctx, {
-        type: type,
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                },
-            },
-        },
-    });
-}
+document.querySelector('.orderAnalyticsClose').addEventListener('click', closeModalStatic);
 
 
-function updateChartType() {
-    const chartType = document.getElementById('chartType').value;
-    applyFilters(); // Cập nhật dữ liệu và biểu đồ với loại biểu đồ mới
-}
 function openHistoryModal() {
     document.getElementById('historyModal').style.display = 'block';
     fetchHistory(); // Tải dữ liệu ban đầu
@@ -3406,5 +3497,203 @@ fetch('http://localhost/web_ban_banh_kem/public/admin-info')
         .catch(error => {
             console.error('Có lỗi khi lấy dữ liệu admin:', error);
         });
+        let charts = {};
+       // Khởi tạo biểu đồ khi trang được tải
+function initializeCharts() {
+    // Kiểm tra sự tồn tại của phần tử trước khi khởi tạo biểu đồ
+    const dailyOrdersChartElement = document.getElementById('dailyOrdersChart');
+    const orderStatusChartElement = document.getElementById('orderStatusChart');
+    const hourlyDistributionChartElement = document.getElementById('hourlyDistributionChart');
+    const topProductsChartElement = document.getElementById('topProductsChart');
+
+    if (dailyOrdersChartElement && orderStatusChartElement && hourlyDistributionChartElement && topProductsChartElement) {
+        // Biểu đồ đơn hàng theo ngày
+        charts.dailyOrders = new Chart(dailyOrdersChartElement, {
+            type: 'line',
+            data: {
+                labels: [],  // Cập nhật labels từ API
+                datasets: [
+                    {
+                        label: 'Số đơn hàng',
+                        data: [],  // Cập nhật dữ liệu từ API
+                        borderColor: '#3b82f6',
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: 'Doanh thu',
+                        data: [],  // Cập nhật dữ liệu từ API
+                        borderColor: '#10b981',
+                        yAxisID: 'y1',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    }
+                }
+            }
+        });
+
+        // Biểu đồ trạng thái đơn hàng
+        charts.orderStatus = new Chart(orderStatusChartElement, {
+            type: 'doughnut',
+            data: {
+                labels: [],  // Cập nhật labels từ API
+                datasets: [{
+                    data: [],  // Cập nhật dữ liệu từ API
+                    backgroundColor: [
+                        '#3b82f6',
+                        '#10b981',
+                        '#ef4444',
+                        '#f59e0b',
+                        '#6366f1'
+                    ]
+                }]
+            }
+        });
+
+        // Biểu đồ phân bố theo giờ
+        charts.hourlyDistribution = new Chart(hourlyDistributionChartElement, {
+            type: 'bar',
+            data: {
+                labels: Array.from({ length: 24 }, (_, i) => `${i}h`),  // Labels theo giờ trong ngày
+                datasets: [{
+                    label: 'Số đơn hàng',
+                    data: [],  // Cập nhật dữ liệu từ API
+                    backgroundColor: '#3b82f6'
+                }]
+            }
+        });
+
+        // Biểu đồ top sản phẩm
+        charts.topProducts = new Chart(topProductsChartElement, {
+            type: 'bar',
+            data: {
+                labels: [],  // Cập nhật labels từ API
+                datasets: [{
+                    label: 'Số lượng bán',
+                    data: [],  // Cập nhật dữ liệu từ API
+                    backgroundColor: '#3b82f6'
+                }]
+            }
+        });
+    } else {
+        console.error("Một hoặc nhiều phần tử DOM không tồn tại.");
+    }
+}
+
+// Hàm để gọi API và cập nhật dữ liệu
+function fetchOrderAnalytics(startDate, endDate) {
+    const url = 'http://localhost/web_ban_banh_kem/public/getOrderAnalytics'; // Đảm bảo đường dẫn đúng với route của bạn
+    
+    // Gửi yêu cầu AJAX để lấy dữ liệu
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ start_date: startDate, end_date: endDate })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Cập nhật các giá trị thống kê
+        document.getElementById('totalOrders').textContent = data.summary.total_orders.toLocaleString();
+        document.getElementById('totalRevenue').textContent = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(data.summary.total_revenue);
+        document.getElementById('avgOrderValue').textContent = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(data.summary.average_order_value);
+        document.getElementById('uniqueCustomers').textContent = data.summary.unique_customers.toLocaleString();
+
+        // Cập nhật biểu đồ đơn hàng và doanh thu theo ngày
+        updateDailyOrdersChart(data.daily_orders, data.time_range);
+
+        // Cập nhật biểu đồ trạng thái đơn hàng
+        updateOrderStatusChart(data.order_status);
+
+        // Cập nhật biểu đồ phân bố đơn hàng theo giờ
+        updateHourlyDistributionChart(data.hourly_distribution);
+
+        // Cập nhật biểu đồ top sản phẩm bán chạy
+        updateTopProductsChart(data.top_products);
+    })
+    .catch(error => console.error('Error fetching analytics data:', error));
+}
+
+// Các hàm cập nhật biểu đồ
+function updateDailyOrdersChart(dailyOrders, timeRange) {
+    const labels = dailyOrders.map(item => item.date);
+    const orderCountData = dailyOrders.map(item => item.order_count);
+    const revenueData = dailyOrders.map(item => item.daily_revenue);
+
+    charts.dailyOrders.data.labels = labels;
+    charts.dailyOrders.data.datasets[0].data = orderCountData;
+    charts.dailyOrders.data.datasets[1].data = revenueData;
+
+    charts.dailyOrders.update();
+}
+
+function updateOrderStatusChart(orderStatus) {
+    const labels = orderStatus.map(item => item.status);
+    const data = orderStatus.map(item => item.count);
+
+    charts.orderStatus.data.labels = labels;
+    charts.orderStatus.data.datasets[0].data = data;
+
+    charts.orderStatus.update();
+}
+
+function updateHourlyDistributionChart(hourlyDistribution) {
+    const data = hourlyDistribution.map(item => item.count);
+
+    charts.hourlyDistribution.data.datasets[0].data = data;
+
+    charts.hourlyDistribution.update();
+}
+
+function updateTopProductsChart(topProducts) {
+    const labels = topProducts.map(item => item.product.name);
+    const data = topProducts.map(item => item.total_quantity);
+
+    charts.topProducts.data.labels = labels;
+    charts.topProducts.data.datasets[0].data = data;
+
+    charts.topProducts.update();
+}
+
+// Lắng nghe sự kiện nhấn nút "Lọc dữ liệu"
+document.getElementById('filterButton').addEventListener('click', function () {
+    const startDate = document.getElementById('orderstartDate').value;
+    const endDate = document.getElementById('orderendDate').value;
+
+    if (startDate && endDate) {
+        fetchOrderAnalytics(startDate, endDate);
+    } else {
+        alert('Vui lòng chọn ngày bắt đầu và kết thúc.');
+    }
+});
+
+// Khởi tạo biểu đồ khi trang được tải
+initializeCharts();
+
 </script>
 </body>

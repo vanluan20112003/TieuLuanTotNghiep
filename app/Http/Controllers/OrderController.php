@@ -634,7 +634,91 @@ public function fetchOrderHistory(Request $request)
     // Trả về JSON
     return response()->json($formattedLogs);
 }
+public function getOrderAnalytics(Request $request)
+{
+    // Xử lý tham số thời gian
+    $startDate = $request->input('start_date', Carbon::now()->startOfMonth());
+    $endDate = $request->input('end_date', Carbon::now()->endOfMonth());
 
+    // Validate và chuyển đổi ngày
+    $startDate = Carbon::parse($startDate)->startOfDay();
+    $endDate = Carbon::parse($endDate)->endOfDay();
+
+    // 1. Tổng quan đơn hàng trong khoảng thời gian
+    $orderSummary = Order::whereBetween('created_at', [$startDate, $endDate])
+        ->select(
+            DB::raw('COUNT(*) as total_orders'),
+            DB::raw('SUM(total_amount) as total_revenue'),
+            DB::raw('AVG(total_amount) as average_order_value'),
+            DB::raw('COUNT(DISTINCT user_id) as unique_customers')
+        )->first();
+
+    // 2. Thống kê đơn hàng theo ngày
+    $dailyOrders = Order::whereBetween('created_at', [$startDate, $endDate])
+        ->select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('COUNT(*) as order_count'),
+            DB::raw('SUM(total_amount) as daily_revenue')
+        )
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+    // 3. Phân tích trạng thái đơn hàng
+    $orderStatus = Order::whereBetween('created_at', [$startDate, $endDate])
+        ->select('status', DB::raw('COUNT(*) as count'))
+        ->groupBy('status')
+        ->get();
+
+    // 4. Top sản phẩm bán chạy trong khoảng thời gian
+    $topProducts = OrderDetail::whereHas('order', function($query) use ($startDate, $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        })
+        ->with('product:id,name,price')
+        ->select(
+            'product_id',
+            DB::raw('SUM(quantity) as total_quantity'),
+            DB::raw('SUM(amount) as total_amount')
+        )
+        ->groupBy('product_id')
+        ->orderByDesc('total_quantity')
+        ->limit(5)
+        ->get();
+
+    // 5. Phân tích theo giờ trong ngày
+    $hourlyDistribution = Order::whereBetween('created_at', [$startDate, $endDate])
+        ->select(
+            DB::raw('HOUR(created_at) as hour'),
+            DB::raw('COUNT(*) as count'),
+            DB::raw('SUM(total_amount) as revenue')
+        )
+        ->groupBy('hour')
+        ->orderBy('hour')
+        ->get();
+
+    // 6. Phân tích sử dụng mã giảm giá
+    $discountAnalysis = Order::whereBetween('created_at', [$startDate, $endDate])
+        ->select(
+            DB::raw('COUNT(CASE WHEN discount_used IS NOT NULL THEN 1 END) as orders_with_discount'),
+            DB::raw('COUNT(CASE WHEN discount_used IS NULL THEN 1 END) as orders_without_discount'),
+            DB::raw('SUM(CASE WHEN discount_used IS NOT NULL THEN total_amount END) as revenue_with_discount'),
+            DB::raw('SUM(CASE WHEN discount_used IS NULL THEN total_amount END) as revenue_without_discount')
+        )
+        ->first();
+
+    return response()->json([
+        'time_range' => [
+            'start_date' => $startDate->format('Y-m-d'),
+            'end_date' => $endDate->format('Y-m-d')
+        ],
+        'summary' => $orderSummary,
+        'daily_orders' => $dailyOrders,
+        'order_status' => $orderStatus,
+        'top_products' => $topProducts,
+        'hourly_distribution' => $hourlyDistribution,
+        'discount_analysis' => $discountAnalysis
+    ]);
+}
 
 public function generateOrderReport(Request $request)
 {

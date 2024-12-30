@@ -253,64 +253,7 @@
     <button class="btn btn-back mt-3" onclick="goBack(3)">Trở về</button>
 </div>
 
-<div id="step-5" class="step-container">
-    <h2 class="step-header">Bước 5: Nạp Tiền</h2>
-    
-    <!-- Lựa chọn Nạp hoặc Rút tiền -->
-    <div class="d-flex justify-content-center mb-3">
-        <div class="form-check mx-2">
-            <input class="form-check-input" type="radio" name="transactionType" id="radio-nap" value="nap" checked onclick="selectAction('nap')">
-            <label class="form-check-label" for="radio-nap">Nạp Tiền</label>
-        </div>
-        <div class="form-check mx-2">
-            <input class="form-check-input" type="radio" name="transactionType" id="radio-rut" value="rut" onclick="selectAction('rut')">
-            <label class="form-check-label" for="radio-rut">Rút Tiền</label>
-        </div>
-    </div>
 
-    <!-- Nhập số tiền -->
-    <div class="form-group text-center">
-        <label for="amount">Số Tiền:</label>
-        <input type="number" class="form-control mx-auto" id="amount" required placeholder="Nhập số tiền" min="1000" style="max-width: 150px;">
-        <div id="amount-error" class="text-danger" style="display: none;">Vui lòng nhập số tiền hợp lệ.</div>
-    </div>
-
-    <!-- Gợi ý số tiền -->
-    <div class="suggestion-buttons text-center">
-        <button type="button" class="btn btn-outline-primary mx-1" onclick="suggestAmount(100000)">100.000đ</button>
-        <button type="button" class="btn btn-outline-primary mx-1" onclick="suggestAmount(200000)">200.000đ</button>
-        <button type="button" class="btn btn-outline-primary mx-1" onclick="suggestAmount(300000)">300.000đ</button>
-        <button type="button" class="btn btn-outline-primary mx-1" onclick="suggestAmount(500000)">500.000đ</button>
-    </div>
-
-    <!-- Thông tin nguồn tiền -->
-    <h3 class="mt-4 text-center">Thông Tin Nguồn Tiền</h3>
-    <div class="row" style="align-items: center; justify-content: center;"> 
-        <div class="col-md-8">
-            <div class="form-container">
-                <form>
-                    <div class="form-group">
-                        <label for="pp_thanh_toan">Phương Thức Thanh Toán:</label>
-                        <input type="text" class="form-control" id="pp_thanh_toan" readonly value="Ví dụ: Ngân hàng A" data-ppthanh toán="{{ $theDaNang->pp_thanh_toan }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="ma_the">Mã Thẻ:</label>
-                        <input type="text" class="form-control" id="ma_the" readonly value="1234-5678-9876-5432">
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-    </div>
-
-    <!-- Nút xác nhận và trở về -->
-    <div class="text-center mt-3">
-    <button type="button" class="btn btn-primary btn-sm mt-3 px-4" onclick="confirmTransaction()">Xác Nhận</button>
-<button class="btn btn-secondary btn-sm mt-3 px-4" onclick="goBack(1)">Trở về</button>
-
-
-    </div>
-</div>
 
 
 
