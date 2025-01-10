@@ -14,6 +14,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/speech.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
 
     <style>
         .quantity-selector {
@@ -1602,6 +1604,20 @@
         </div>
     </div>
 </div>
+<!-- Thêm nút chuyển đổi view -->
+<div class="view-controls">
+    <button class="view-btn grid-view active" data-view="grid">
+        <i class="fas fa-th"></i> Dạng lưới
+    </button>
+    <button class="view-btn list-view" data-view="list">
+        <i class="fas fa-list"></i> Dạng danh sách
+    </button>
+    <button class="view-btn table-view" data-view="table">
+        <i class="fas fa-table"></i> Dạng bảng
+    </button>
+</div>
+
+<!-- Giữ nguyên HTML gốc, thay đổi cách hiển thị trong CSS và JavaScript -->
 <div id="product-grid" class="product-grid">
     @foreach($products as $product)
     <div class="product-card" data-product-id="{{ $product->id }}" data-detail-id="{{ $product->cartDetail->id ?? '' }}">
@@ -1633,6 +1649,273 @@
 </div>
 
 
+<style>
+:root {
+    --primary-color: #005e8a;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --border-color: #e9ecef;
+    --background: #f8f9fa;
+}
+
+/* Nút chuyển đổi view */
+.view-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.view-btn {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.view-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Grid view - giữ nguyên style cũ */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+/* List view styles */
+.product-grid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-view .product-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px;
+    background: white;
+}
+
+.list-view .product-link {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+}
+
+.list-view .product-image {
+    width: 250px; /* Chiều rộng cố định */
+    height: 80px; /* Chiều cao cố định */
+    margin-right: 15px;
+    display: flex; /* Đảm bảo bố cục ảnh hiển thị chính xác */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Cắt bỏ phần thừa nếu hình ảnh quá lớn */
+}
+
+.list-view .product-image img {
+    width: 100%; /* Chiều rộng tự động co giãn */
+    height: 100%; /* Phủ kín container */
+    object-fit: cover; /* Cắt hình ảnh theo chiều container mà không bị méo */
+    border-radius: 4px; /* Bo góc */
+}
+
+.list-view .product-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.list-view .product-name {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.list-view .product-price {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.list-view .product-status {
+    font-size: 0.875rem;
+    color: var(--success-color);
+}
+
+.list-view .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid var(--border-color);
+}
+
+.list-view .quantity-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.list-view .quantity-control button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: white;
+    cursor: pointer;
+}
+
+.list-view .qty {
+    width: 40px;
+    text-align: center;
+    border: none;
+    padding: 4px;
+}
+
+.list-view .add-to-cart-btn,
+.list-view .remove-from-cart-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-view .add-to-cart-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.list-view .remove-from-cart-btn {
+    background: var(--danger-color);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .list-view .product-card {
+        flex-wrap: wrap;
+    }
+    
+    .list-view .product-link {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .list-view .action-buttons {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        padding-top: 10px;
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 480px) {
+    .list-view .product-link {
+        flex-wrap: wrap;
+    }
+    
+    .list-view .product-image {
+        width: 80px;
+        height: 80px;
+    }
+}
+.product-grid.table-view {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-grid.table-view .product-card {
+    display: table-row;
+    border: 1px solid var(--border-color);
+    background: white;
+}
+
+.product-grid.table-view .product-card .product-link {
+    display: table-cell;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-grid.table-view .product-image {
+    width: 100px; /* Kích thước nhỏ hơn để phù hợp với bảng */
+    height: 100px;
+    margin-right: 10px;
+}
+
+.product-grid.table-view .product-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-grid.table-view .product-name,
+.product-grid.table-view .product-price,
+.product-grid.table-view .product-status {
+    font-size: 0.875rem;
+}
+
+.product-grid.table-view .action-buttons {
+    display: table-cell;
+    text-align: center;
+    padding: 10px;
+}
+
+.product-grid.table-view .quantity-control {
+    display: flex;
+    justify-content: center;
+}
+
+.product-grid.table-view .add-to-cart-btn,
+.product-grid.table-view .remove-from-cart-btn {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 5px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const productGrid = document.getElementById('product-grid');
+    
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const view = this.getAttribute('data-view');
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Thêm hoặc loại bỏ các lớp tương ứng với từng chế độ xem
+            productGrid.classList.remove('grid-view', 'list-view', 'table-view');
+            productGrid.classList.add(`${view}-view`);
+        });
+    });
+});
+
+</script>
+
+
 
 
 
@@ -1662,6 +1945,62 @@
     <span id="notificationCount" class="notification-count">0</span> <!-- Số lượng thông báo chưa hết hạn -->
 </div>
 <div class="snowflakes" aria-hidden="true"></div>
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Thông tin liên hệ -->
+        <div class="footer-section">
+            <h3>Liên Hệ</h3>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
+            <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
+        </div>
+
+        <!-- Dịch vụ -->
+        <div class="footer-section">
+            <h3>Dịch Vụ</h3>
+            <ul>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
+            </ul>
+        </div>
+
+        <!-- Hỗ trợ -->
+        <div class="footer-section">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Hướng dẫn đặt món</a></li>
+                <li><a href="#">Chính sách & Quy định</a></li>
+                <li><a href="#">Phản hồi & Góp ý</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Đăng Ký Nhận Tin</h3>
+            <p>Nhận thông tin về thực đơn và khuyến mãi mới nhất</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
+    </div>
+</footer>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="http://localhost/web_ban_banh_kem/public/js/script.js"></script>
 <script>
@@ -1808,86 +2147,207 @@ $(document).ready(function(){
 });
 
  // Tìm kiếm tự động khi gõ vào ô input
- $('.search-input').on('input', function() {
-        let query = $(this).val();
+ $('.search-input').on('input', function () {
+    let query = $(this).val().trim();
 
-        if(query.length > 0) {
-            $.ajax({
-                url: "{{ route('products.searchmenu') }}",
-                method: 'GET',
-                data: { query: query },
-                success: function(response) {
-                    let searchResults = $('.search-results');
-                    searchResults.html('');
-
-                    if (response.length > 0) {
-                        searchResults.show();
-                        response.forEach(function(product) {
-                            searchResults.append(`
-                                <div class="search-item">
-                                 <a href="http://localhost/web_ban_banh_kem/public/quick_view/${product.id}" class="product-link">
-                                    <img src="http://localhost/web_ban_banh_kem/public/images/${product.image}" alt="${product.name}">
-                                    <div class="search-item-details">
-                                        <p>${product.name}</p>
-                                        <p>Giá: ${new Intl.NumberFormat().format(product.price)}đ</p>
-                                        <p>Danh mục: ${product.category.name}</p>
-                                    </div>
-                                    </a>
+    if (query.length > 0) {
+        // Gửi yêu cầu AJAX tìm kiếm
+        $.ajax({
+            url: "{{ route('products.searchmenu') }}",
+            method: 'GET',
+            data: { query: query },
+            success: function (response) {
+                if (response.length > 0) {
+                    // Tạo HTML sản phẩm từ dữ liệu phản hồi
+                    let productHtml = response.map(product => `
+                        <div class="product-card" data-product-id="${product.id}" data-detail-id="${product.id}">
+                            <a href="{{ url('quick_view') }}/${product.id}" class="product-link">
+                                <div class="product-image">
+                                    <img src="{{ asset('images') }}/${product.image}" alt="${product.name}" style="width:100%; height:250px; object-fit:cover;">
                                 </div>
-                            `);
-                        });
-                    } else {
-                        showNoProductsMessage(document.getElementById('product-grid'));
-                    }
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-price">Giá: ${new Intl.NumberFormat('vi-VN').format(product.price)}đ</div>
+                                <div class="product-status">${product.quantity_in_stock > 0 ? 'Còn hàng' : 'Hết hàng'}</div>
+                            </a>
+                            <div class="action-buttons">
+                                <div class="quantity-control">
+                                    <button class="decrement">-</button>
+                                    <input type="number" class="qty" value="1" min="1" max="${product.quantity_in_stock}">
+                                    <button class="increment">+</button>
+                                </div>
+                                <button class="add-to-cart-btn" data-product-id="${product.id}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button class="remove-from-cart-btn" data-product-id="${product.id}" data-detail-id="${product.id}">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
 
-                    // Cập nhật ô sản phẩm chính
-                    let productGrid = $('.product-grid');
-                    productGrid.html('');
-                    response.forEach(function(product) {
-                        productGrid.append(`
-    <div class="product-card" data-product-id="${product.id}" data-detail-id="${product.id}">
-        <a href="http://localhost/web_ban_banh_kem/public/quick_view/${product.id}" class="product-link">
-            <div class="product-image">
-                <img src="http://localhost/web_ban_banh_kem/public/images/${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-name">${product.name}</div>
-            <div class="product-price">Giá: ${new Intl.NumberFormat().format(product.price)}đ</div>
-            <div class="product-status">${product.quantity_in_stock > 0 ? 'Còn hàng' : 'Hết hàng'}</div>
-        </a>
-
-        <div class="action-buttons">
-            <div class="quantity-control">
-                <button class="decrement">-</button>
-                <input type="number" class="qty" value="1" min="1" max="10">
-                <button class="increment">+</button>
-            </div>
-            
-            <button class="add-to-cart-btn" data-product-id="${product.id}">
-                <i class="fas fa-shopping-cart"></i>
-            </button>
-            <button class="remove-from-cart-btn" data-product-id="${product.id}" data-detail-id="${product.id}">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-`);
-
-
-                    });
+                    // Hiển thị sản phẩm vào grid
+                    $('.product-grid').html(productHtml).show();
+                } else {
+                    // Hiển thị thông báo không có sản phẩm
+                    showNoProductsMessage(document.querySelector('.product-grid'));
                 }
-            });
-        } else {
-            $('.search-results').hide();
-        }
-    });
+            },
+            error: function () {
+                console.error('Lỗi khi lấy dữ liệu tìm kiếm.');
+            }
+        });
+    } else {
+        // Xóa danh sách nếu ô tìm kiếm trống
+        $('.product-grid').html('');
+    }
+});
 
-    // Đóng kết quả tìm kiếm khi click ra ngoài
-    $(document).click(function(e) {
-        if (!$(e.target).closest('.search-container').length) {
-            $('.search-results').hide();
-        }
-    });
+// Hàm hiển thị thông báo khi không có sản phẩm
+function showNoProductsMessage(container) {
+    const messageHtml = `
+        <div class="no-products-message">
+            <style>
+                .no-products-message {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    padding: 40px 20px;
+                    animation: fadeInUp 0.5s ease-out;
+                    height: 100%;
+                }
+                .no-products-icon {
+                    font-size: 60px;
+                    color: #ffd700;
+                    margin-bottom: 20px;
+                    animation: bounce 2s infinite;
+                }
+                .no-products-text {
+                    font-size: 1.5rem;
+                    color: #666;
+                    margin-bottom: 15px;
+                }
+                .no-products-subtext {
+                    color: #888;
+                    font-size: 1rem;
+                }
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                @keyframes bounce {
+                    0%, 20%, 50%, 80%, 100% {
+                        transform: translateY(0);
+                    }
+                    40% {
+                        transform: translateY(-30px);
+                    }
+                    60% {
+                        transform: translateY(-15px);
+                    }
+                }
+            </style>
+            <div class="no-products-icon">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+            <div class="no-products-text">
+                Oops! Không tìm thấy sản phẩm nào 🍰
+            </div>
+            <div class="no-products-subtext">
+                Hãy thử tìm kiếm với từ khóa khác!
+            </div>
+        </div>
+    `;
 
+    container.innerHTML = messageHtml;
+    container.style.display = 'flex';
+    container.style.justifyContent = 'center';
+    container.style.alignItems = 'center';
+    container.style.height = '100%';
+}
+
+// Đóng kết quả tìm kiếm khi click ra ngoài
+$(document).click(function (e) {
+    if (!$(e.target).closest('.search-container').length) {
+        $('.search-results').hide();
+    }
+});
+function showNoProductsMessage(container) {
+    const messageHtml = `
+        <div class="no-products-message">
+            <style>
+                .no-products-message {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    padding: 40px 20px;
+                    animation: fadeInUp 0.5s ease-out;
+                    height: 100%; /* Đảm bảo chiều cao chiếm toàn bộ container */
+                }
+                .no-products-icon {
+                    font-size: 60px;
+                    color: #ffd700;
+                    margin-bottom: 20px;
+                    animation: bounce 2s infinite;
+                }
+                .no-products-text {
+                    font-size: 1.5rem;
+                    color: #666;
+                    margin-bottom: 15px;
+                }
+                .no-products-subtext {
+                    color: #888;
+                    font-size: 1rem;
+                }
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                @keyframes bounce {
+                    0%, 20%, 50%, 80%, 100% {
+                        transform: translateY(0);
+                    }
+                    40% {
+                        transform: translateY(-30px);
+                    }
+                    60% {
+                        transform: translateY(-15px);
+                    }
+                }
+            </style>
+            <div class="no-products-icon">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+            <div class="no-products-text">
+                Oops! Không tìm thấy sản phẩm nào 🍰
+            </div>
+            <div class="no-products-subtext">
+                Hãy thử tìm kiếm với bộ lọc khác nhé!
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = messageHtml;
+    container.style.display = 'flex';
+    container.style.justifyContent = 'center';
+    container.style.alignItems = 'center';
+    container.style.height = '100%';
+}
 });
 
 function confirmLogout() {
@@ -2000,34 +2460,52 @@ $('.search-input').on('input', function () {
             data: { query: query },
             success: function (response) {
                 let searchResults = $('.search-results');
-                searchResults.html('');
+                searchResults.html(''); // Xóa kết quả trước đó
 
                 if (response.length > 0) {
-                    searchResults.show();
+                    searchResults.show(); // Hiển thị kết quả tìm kiếm
+
                     response.forEach(function (product) {
+                        // Cập nhật lại HTML cho từng sản phẩm trong kết quả tìm kiếm
                         searchResults.append(`
-                            <div class="search-item">
+                            <div class="product-card" data-product-id="${product.id}">
                                 <a href="http://localhost/web_ban_banh_kem/public/quick_view/${product.id}" class="product-link">
-                                    <img src="http://localhost/web_ban_banh_kem/public/images/${product.image}" alt="${product.name}">
-                                    <div class="search-item-details">
-                                        <p>${product.name}</p>
-                                        <p>Giá: ${new Intl.NumberFormat().format(product.price)}đ</p>
-                                        <p>Danh mục: ${product.category.name}</p>
+                                    <div class="product-image">
+                                        <img src="http://localhost/web_ban_banh_kem/public/images/${product.image}" alt="${product.name}" style="width:100%; height:250px; object-fit:cover;">
                                     </div>
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-price">Giá: ${new Intl.NumberFormat().format(product.price)}đ</div>
+                                    <div class="product-status">${product.quantity_in_stock > 0 ? 'Còn hàng' : 'Hết hàng'}</div>
                                 </a>
+                                <div class="action-buttons">
+                                    <div class="quantity-control">
+                                        <button class="decrement">-</button>
+                                        <input type="number" class="qty" value="1" min="1" max="10">
+                                        <button class="increment">+</button>
+                                    </div>
+                                    <button class="add-to-cart-btn" data-product-id="${product.id}">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="remove-from-cart-btn" data-product-id="${product.id}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
                         `);
                     });
                 } else {
-                    showNoProductsMessage(document.querySelector('.product-grid'));
+                    // Nếu không có kết quả, hiển thị thông báo không có sản phẩm
+                    searchResults.append(`
+                        <div class="no-products-message">Không tìm thấy sản phẩm nào!</div>
+                    `);
                 }
 
-                // Cập nhật danh sách sản phẩm chính
+                // Cập nhật lại sản phẩm chính trong grid
                 let productGrid = $('.product-grid');
-                productGrid.html('');
+                productGrid.html(''); // Xóa sản phẩm cũ
                 response.forEach(function (product) {
                     productGrid.append(`
-                        <div class="product-card">
+                        <div class="product-card" data-product-id="${product.id}">
                             <a href="http://localhost/web_ban_banh_kem/public/quick_view/${product.id}" class="product-link">
                                 <div class="product-image">
                                     <img src="http://localhost/web_ban_banh_kem/public/images/${product.image}" alt="${product.name}">
@@ -2057,10 +2535,11 @@ $('.search-input').on('input', function () {
             }
         });
     } else {
+        // Ẩn kết quả khi không có dữ liệu trong ô tìm kiếm
         $('.search-results').hide();
     }
 });
-// Thêm khả năng kéo thả cho .existing-products
+
 const draggableElement = document.querySelector('.existing-products');
 let isDragging = false;
 let offsetX, offsetY;

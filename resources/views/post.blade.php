@@ -9,6 +9,7 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+   <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     
     <title>Blog Travel và Astronomy</title>
     <style>
@@ -386,6 +387,28 @@
     font-weight: 500;
     transition: all 0.3s ease;
 }
+.blog-icons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.blog-icons .icon {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #95a5a6;
+}
+
+.blog-icons .icon i {
+    margin-right: 0.3rem;
+    font-size: 1.2rem; /* Kích thước icon */
+}
+
+.blog-icons .count {
+    font-size: 0.9rem; /* Kích thước chữ */
+    color: #7f8c8d;
+}
 
 .read-more:hover {
     background: #2980b9;
@@ -517,18 +540,25 @@
         <input type="text" class="search-bar" placeholder="Search...">
     </div>
 
-    <div class="blog-grid">
+    <div class="blog-grid"> 
     @foreach($posts as $post)
         <div class="blog-card">
-        <a href="{{ route('post_detail', ['id' => $post->id]) }}">
-            <img src="{{ $post->cover_image }}" alt="{{ $post->title }}" class="blog-image"
-</a>
+            <a href="{{ route('post_detail', ['id' => $post->id]) }}">
+                <img src="{{ $post->cover_image }}" alt="{{ $post->title }}" class="blog-image">
+            </a>
             <div class="blog-content">
                 <div class="blog-title">{{ $post->title }}</div>
                 <div class="blog-excerpt">{{ Str::limit($post->description, 150) }}</div>
                 <div class="blog-meta">
-                    <div class="blog-tags">
-                        <span class="blog-tag">{{ $post->type }}</span>
+                    <div class="blog-icons">
+                        <span class="icon">
+                            <i class="fas fa-eye"></i> <!-- Icon lượt xem -->
+                            <span class="count">{{ $post->views }}</span>
+                        </span>
+                        <span class="icon">
+                            <i class="fas fa-comment"></i> <!-- Icon bình luận -->
+                            <span class="count">{{ $post->comments_count }}</span> <!-- Số bình luận -->
+                        </span>
                     </div>
                     <div>{{ $post->created_at->format('M d, Y') }}</div>
                 </div>
@@ -537,6 +567,65 @@
         </div>
     @endforeach
 </div>
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Thông tin liên hệ -->
+        <div class="footer-section">
+            <h3>Liên Hệ</h3>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
+            <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
+        </div>
+
+        <!-- Dịch vụ -->
+        <div class="footer-section">
+            <h3>Dịch Vụ</h3>
+            <ul>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
+            </ul>
+        </div>
+
+        <!-- Hỗ trợ -->
+        <div class="footer-section">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Hướng dẫn đặt món</a></li>
+                <li><a href="#">Chính sách & Quy định</a></li>
+                <li><a href="#">Phản hồi & Góp ý</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Đăng Ký Nhận Tin</h3>
+            <p>Nhận thông tin về thực đơn và khuyến mãi mới nhất</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
+    </div>
+</footer>
 <div class="snowflakes" aria-hidden="true"></div>
 <script src="http://localhost/web_ban_banh_kem/public/js/script.js"></script>
 <script>const numberOfSnowflakes = 100;

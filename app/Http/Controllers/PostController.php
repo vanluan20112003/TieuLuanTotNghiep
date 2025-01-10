@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $cartQuantity = 0;
-
+    
         $user = Auth::user();
         if ($user) {
             // Tìm giỏ hàng của người dùng
@@ -31,12 +31,16 @@ class PostController extends Controller
                 $cartQuantity = CartDetail::where('cart_id', $cart->id)->sum('quantity');
             }
         }
+    
+        // Lấy danh sách bài viết và đếm số lượng bình luận cho mỗi bài
         $posts = Post::where('is_deleted', false)
-        ->orderBy('created_at', 'desc') // Sắp xếp theo `created_at` giảm dần
-        ->get();
-
-        return view('post', compact('posts','cartQuantity')); // Trả về view với biến $posts
+            ->withCount('comments') // Đếm số lượng bình luận
+            ->orderBy('created_at', 'desc') // Sắp xếp theo `created_at` giảm dần
+            ->get();
+    
+        return view('post', compact('posts', 'cartQuantity')); // Trả về view với biến $posts
     }
+    
 
 
     // Hiển thị form tạo bài viết

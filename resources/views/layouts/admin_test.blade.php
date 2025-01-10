@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Admin Dashboard</title>
     <style>
 .stat-title {
@@ -405,7 +406,7 @@ a:hover {
             <a href="http://localhost/web_ban_banh_kem/public/admin/category"><div class="submenu-item">📂 Quản lý danh mục</div></a>
             <a href="http://localhost/web_ban_banh_kem/public/admin/ingredient">
   <div class="submenu-item">
-    <i class="fas fa-blender"></i> Quản lý nguyên liệu 
+  <i class="fas fa-blender"></i> Quản lý nguyên liệu 
   </div>
 </a>
         </div>

@@ -11,6 +11,8 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
    <!-- Custom CSS File Link -->
    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
    <link rel="stylesheet" href="{{ asset('css/quickview.css') }}">
 <style>
     .pagination {
@@ -409,6 +411,23 @@
     animation: cartShake 0.4s ease-in-out;
 }
 
+.tag {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: capitalize;
+    display: inline-block;
+    background-color: #f1f1f1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.tag:hover {
+    background-color: #FFEB3B; /* Màu vàng dễ chịu khi hover */
+    transform: scale(1.1);
+}
 
 </style>
    
@@ -508,69 +527,113 @@
 
         <!-- Cột phải - Thông tin sản phẩm và giá -->
         <div class="right-column" style="flex: 0 0 55%;">
-            <h2 class="product-name" style="margin: 0 0 15px 0; font-size: 32px; color: #333;">
-                <i class="fas fa-box"></i> {{ $product->name }}
-                <button id="speak-button" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
-                    <i id="speaker-icon" class="fas fa-volume-up"></i>
-                </button>
-            </h2>
+    <h2 class="product-name" style="margin: 0 0 15px 0; font-size: 32px; color: #333;">
+        <i class="fas fa-box"></i> {{ $product->name }}
+        <button id="speak-button" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
+            <i id="speaker-icon" class="fas fa-volume-up"></i>
+        </button>
+    </h2>
 
-            <div class="rating-price" style="margin-bottom: 20px;">
-                <div class="average-rating" style="margin-bottom: 15px;">
-                    <div class="star-rating" style="margin-bottom: 5px;">
-                        @for ($i = 1; $i <= 5; $i++)
-                            @if ($i <= round($averageRating))
-                                <i class="fas fa-star checked" style="color: #FFD700; font-size: 20px;"></i>
-                            @else
-                                <i class="fas fa-star" style="color: #ddd; font-size: 20px;"></i>
-                            @endif
-                        @endfor
-                    </div>
-                    <p class="average-text" style="color: #666; margin: 0;">
-                        Trung bình {{ number_format($averageRating, 1) }} sao / 5
-                    </p>
-                </div>
+    <div class="tag-list" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+        <!-- Thêm các tag dinh dưỡng dựa trên giá trị thành phần -->
+        @if($nutritionRatio['sugar'] < 10)
+            <span class="tag" style="background-color: #4CAF50;">Ít đường</span>
+        @endif
 
-                <div class="price-info" style="margin-bottom: 15px;">
-                    <span class="current-price" style="font-size: 36px; font-weight: bold; color: #e53935; display: block;">
-                        {{ number_format($product->price, 0, ',', '.') }} ₫
-                    </span>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span class="discount-price" style="color: #888; text-decoration: line-through; font-size: 16px;">
-                            {{ number_format($product->original_price, 0, ',', '.') }} ₫
-                        </span>
-                        <span style="color: #FF5722; font-weight: 500;">
-                            -{{ rtrim(rtrim(number_format($product->discount, 2), '0'), '.') }}%
-                        </span>
-                    </div>
-                </div>
+        @if($nutritionRatio['protein'] > 30)
+            <span class="tag" style="background-color: #FFC107;">Nhiều protein</span>
+        @endif
+
+        @if($nutritionRatio['fiber'] > 20)
+            <span class="tag" style="background-color: #8BC34A;">Chất xơ cao</span>
+        @endif
+
+        @if($nutritionRatio['fat'] < 10)
+            <span class="tag" style="background-color: #03A9F4;">Ít chất béo</span>
+        @endif
+
+        @if($nutritionFact->carbohydrate < 100)
+            <span class="tag" style="background-color: #FFEB3B;">Ít Carbs</span>
+        @endif
+
+        <!-- Các tag dinh dưỡng khác -->
+        @if($nutritionFact->calories < 200)
+            <span class="tag" style="background-color: #FF5722;">Ít calo</span>
+        @endif
+
+        @if($nutritionFact->fiber >= 30)
+            <span class="tag" style="background-color: #8BC34A;">Rất nhiều chất xơ</span>
+        @endif
+
+        @if($nutritionFact->protein < 20)
+            <span class="tag" style="background-color: #FF9800;">Thấp protein</span>
+        @endif
+
+        @if($nutritionFact->fat >= 15)
+            <span class="tag" style="background-color: #F44336;">Nhiều chất béo</span>
+        @endif
+
+        @if($nutritionFact->sugar >= 15)
+            <span class="tag" style="background-color: #E91E63;">Nhiều đường</span>
+        @endif
+    </div>
+
+    <div class="rating-price" style="margin-bottom: 20px;">
+        <div class="average-rating" style="margin-bottom: 15px;">
+            <div class="star-rating" style="margin-bottom: 5px;">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= round($averageRating))
+                        <i class="fas fa-star checked" style="color: #FFD700; font-size: 20px;"></i>
+                    @else
+                        <i class="fas fa-star" style="color: #ddd; font-size: 20px;"></i>
+                    @endif
+                @endfor
             </div>
-
-            <p class="description" style="margin-bottom: 25px; line-height: 1.8; color: #444; font-size: 18px;">
-                <i class="fas fa-info-circle"></i> {{ $product->description }}
+            <p class="average-text" style="color: #666; margin: 0;">
+                Trung bình {{ number_format($averageRating, 1) }} sao / 5
             </p>
+        </div>
 
-            <div class="purchase-actions" style="display: flex; align-items: center; gap: 20px;">
-                <div class="quantity" style="display: flex; align-items: center;">
-                    <label for="qty" style="font-weight: 500; color: #444;">
-                        <i class="fas fa-cubes"></i> Số lượng:
-                    </label>
-                    <input type="number" id="qty" class="qty" min="1" max="99" value="1" 
-                        style="width: 80px; margin-left: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                </div>
-
-                @if($product->quantity_in_stock > 0)
-                <button class="add-to-cart-btn" data-product-id="{{ $product->id }}" style="background-color: #007BFF; color: white; border: none; border-radius: 5px; padding: 12px 30px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; flex-grow: 1;">
-    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
-</button>
-
-                @else
-                    <p class="out-of-stock" style="color: #FF5722; font-weight: bold; margin: 0;">
-                        <i class="fas fa-exclamation-circle"></i> Xin lỗi, sản phẩm hiện đã hết hàng.
-                    </p>
-                @endif
+        <div class="price-info" style="margin-bottom: 15px;">
+            <span class="current-price" style="font-size: 36px; font-weight: bold; color: #e53935; display: block;">
+                {{ number_format($product->price, 0, ',', '.') }} ₫
+            </span>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="discount-price" style="color: #888; text-decoration: line-through; font-size: 16px;">
+                    {{ number_format($product->original_price, 0, ',', '.') }} ₫
+                </span>
+                <span style="color: #FF5722; font-weight: 500;">
+                    -{{ rtrim(rtrim(number_format($product->discount, 2), '0'), '.') }}%
+                </span>
             </div>
         </div>
+    </div>
+
+    <p class="description" style="margin-bottom: 25px; line-height: 1.8; color: #444; font-size: 18px;">
+        <i class="fas fa-info-circle"></i> {{ $product->description }}
+    </p>
+
+    <div class="purchase-actions" style="display: flex; align-items: center; gap: 20px;">
+        <div class="quantity" style="display: flex; align-items: center;">
+            <label for="qty" style="font-weight: 500; color: #444;">
+                <i class="fas fa-cubes"></i> Số lượng:
+            </label>
+            <input type="number" id="qty" class="qty" min="1" max="99" value="1" 
+                style="width: 80px; margin-left: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        </div>
+
+        @if($product->quantity_in_stock > 0)
+            <button class="add-to-cart-btn" data-product-id="{{ $product->id }}" style="background-color: #007BFF; color: white; border: none; border-radius: 5px; padding: 12px 30px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; flex-grow: 1;">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+            </button>
+        @else
+            <p class="out-of-stock" style="color: #FF5722; font-weight: bold; margin: 0;">
+                <i class="fas fa-exclamation-circle"></i> Xin lỗi, sản phẩm hiện đã hết hàng.
+            </p>
+        @endif
+    </div>
+</div>
+
     </div>
 
     <!-- Phần dưới - Thông tin dinh dưỡng và thành phần -->
@@ -802,7 +865,62 @@
 
 
 
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Thông tin liên hệ -->
+        <div class="footer-section">
+            <h3>Liên Hệ</h3>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
+            <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
+        </div>
 
+        <!-- Dịch vụ -->
+        <div class="footer-section">
+            <h3>Dịch Vụ</h3>
+            <ul>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
+            </ul>
+        </div>
+
+        <!-- Hỗ trợ -->
+        <div class="footer-section">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Hướng dẫn đặt món</a></li>
+                <li><a href="#">Chính sách & Quy định</a></li>
+                <li><a href="#">Phản hồi & Góp ý</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Đăng Ký Nhận Tin</h3>
+            <p>Nhận thông tin về thực đơn và khuyến mãi mới nhất</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
+    </div>
+</footer>
 
 
 </div>

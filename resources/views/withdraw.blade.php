@@ -774,7 +774,9 @@ textarea {
 <div class="container">
     <!-- Chú thích -->
     <div class="note-container">
-    <i class="fas fa-arrow-left back-icon" onclick="history.back()"></i>
+    <a href="{{ url('/profile') }}">
+    <i class="fas fa-arrow-left back-icon" ></i>
+    </a>
     <div class="note">
         <p>
             <strong>Chú ý:</strong> Nếu cần nạp tiền, vui lòng chuyển khoản vào số tài khoản dưới đây hoặc quét mã QR. Sau khi chuyển khoản, gửi minh chứng lại cho chúng tôi để kiểm tra. Thời gian kiểm duyệt tối đa là <strong>15 phút</strong>.

@@ -4712,7 +4712,7 @@ function checkUnreadMessages() {
         
 // Kiểm tra tin nhắn chưa đọc mỗi 10 giây
 setInterval(checkUnreadMessages, 10000); 
-setInterval(fetchUserList, 10000);
+setInterval(fetchUserList, 5000);
 const templates = {
             'warning-speech': 'Kính nhắc quý khách: Vui lòng sử dụng ngôn từ văn minh, tôn trọng trong quá trình giao tiếp.',
             'general-notice': 'Thông báo: Hệ thống sẽ tiến hành bảo trì vào lúc 22:00 tối nay.',

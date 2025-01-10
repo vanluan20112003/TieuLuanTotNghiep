@@ -695,6 +695,18 @@ tbody tr:hover {
         padding: 10px;
     }
 }
+.processing-status {
+    font-size: 16px;
+    color: #ff9800; /* Màu cam để thu hút sự chú ý */
+    font-weight: bold;
+    text-align: center;
+    background-color: #fff8e1; /* Nền nhạt để làm nổi bật */
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ffd54f; /* Viền màu nhạt để phù hợp */
+    display: inline-block;
+    margin-top: 10px;
+}
 
 
     .cancel-btn {
@@ -953,6 +965,9 @@ button#close-report-dialog:hover {
                 <li>Lịch Sử Đơn Hàng</li>
                 <li>Lịch Sử Đặt Bàn</li>
                 <li>Khuyến mãi</li>
+                <li>Thống kê sức khỏe</li>
+            
+
             </ul>
         </div>
         <div class="content">
@@ -1392,13 +1407,16 @@ button#close-report-dialog:hover {
                 <td>{{ $order->shipping_id?? 'Không có' }}</td>
                 <td>{{ $order->notes }}</td>
                 <td>
-                    @if ($order->status == 'pending')
-                        <button class="btn cancel-order-btn" onclick="cancelOrder('{{ $order->id }}')">Hủy đơn</button>
-                    @elseif ($order->status == 'processing')
-                        <button class="btn confirm-receipt-btn" onclick="confirmReceipt('{{ $order->id }}')">Xác nhận nhận hàng</button>
-                    @elseif ($order->status == 'cancelled' || $order->status == 'completed')
-                        <button class="btn report-order-btn" onclick="reportOrder('{{ $order->id }}')">Báo cáo </button>
-                    @endif
+                @if ($order->status == 'pending')
+    <button class="btn cancel-order-btn" onclick="cancelOrder('{{ $order->id }}')">Hủy đơn</button>
+@elseif ($order->status == 'processing')
+    <div class="processing-status">
+        Đang xử lý...
+    </div>
+@elseif ($order->status == 'cancelled' || $order->status == 'completed')
+    <button class="btn report-order-btn" onclick="reportOrder('{{ $order->id }}')">Báo cáo </button>
+@endif
+
                 </td>
                 <td><button class="view-details-btn" onclick="viewOrderDetails('{{ $order->id }}')">Xem chi tiết</button></td>
             </tr>
@@ -1587,6 +1605,11 @@ button#close-report-dialog:hover {
 </div>
 
 </div>
+
+<div class="tab-content">
+    <iframe src="http://localhost/web_ban_banh_kem/public/nutrition-analysis" style="width: 100%; height: 800px; border: none;"></iframe>
+</div>
+
         </div>
     </div>
     
@@ -2794,15 +2817,15 @@ document.querySelectorAll('.promotion-tab').forEach(tab => {
     });
 });
 const prizes = [
-            { name: "Chúc bạn may mắn lần sau", probability: 40, color: "#FF6B6B" },
-            { name: "Vé giảm giá 10k", probability: 30, color: "#4ECDC4" },
-            { name: "Vé giảm giá 20k", probability: 7, color: "#45B7D1" },
-            { name: "Vé giảm giá 50k", probability: 2, color: "#96CEB4" },
-            { name: "Vé giảm giá 100k", probability: 0.5, color: "#FFEEAD" },
-            { name: "Tiền thẻ đa năng 10k", probability: 16.4, color: "#D4A5A5" },
-            { name: "Tiền thẻ đa năng 20k", probability: 3, color: "#9DC8C8" },
-            { name: "Tiền thẻ đa năng 50k", probability: 1, color: "#58C9B9" },
-            { name: "Tiền thẻ đa năng 100k", probability: 0.09, color: "#519D9E" },
+            { name: "Chúc bạn may mắn lần sau", probability: 70, color: "#FF6B6B" },
+            { name: "Vé giảm giá 10k", probability: 20, color: "#4ECDC4" },
+            { name: "Vé giảm giá 20k", probability: 6, color: "#45B7D1" },
+            { name: "Vé giảm giá 50k", probability: 0.5, color: "#96CEB4" },
+            { name: "Vé giảm giá 100k", probability: 0.1, color: "#FFEEAD" },
+            { name: "Tiền thẻ đa năng 10k", probability:2, color: "#D4A5A5" },
+            { name: "Tiền thẻ đa năng 20k", probability: 0.8, color: "#9DC8C8" },
+            { name: "Tiền thẻ đa năng 50k", probability: 0.3, color: "#58C9B9" },
+            { name: "Tiền thẻ đa năng 100k", probability: 0.29, color: "#519D9E" },
             { name: "Tiền thẻ đa năng 1 triệu", probability: 0.01, color: "#FF9999" }
         ];
 

@@ -17,10 +17,15 @@ class BanAnController extends Controller
 {
     public function index()
     {
+        if (!Auth::check()) {
+            // Nếu chưa đăng nhập, điều hướng sang trang đăng nhập
+            return redirect()->route('login');
+        }
+    
         $userId = Auth::id();
         $currentDateTime = Carbon::now();
         $cartQuantity = 0;
-
+    
         $user = Auth::user();
         if ($user) {
             // Tìm giỏ hàng của người dùng
@@ -31,6 +36,7 @@ class BanAnController extends Controller
                 $cartQuantity = CartDetail::where('cart_id', $cart->id)->sum('quantity');
             }
         }
+    
         // Lấy thông tin đặt bàn của người dùng hiện tại với trạng thái không phải "confirmed" và "cancelled", có thời gian rời đi sau thời điểm hiện tại
         $currentReservation = DatBan::where('user_id', $userId)
             ->whereNotIn('trang_thai', ['confirmed', 'cancelled'])
@@ -41,8 +47,9 @@ class BanAnController extends Controller
         $banAn = BanAn::all();
     
         // Truyền dữ liệu bàn ăn và thông tin đặt bàn của người dùng vào view
-        return view('contact', compact('banAn', 'currentReservation','cartQuantity'));
+        return view('contact', compact('banAn', 'currentReservation', 'cartQuantity'));
     }
+    
     public function store(Request $request)
 {
     $userId = Auth::id();

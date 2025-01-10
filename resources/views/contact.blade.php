@@ -13,6 +13,8 @@
    <!-- custom css file link  -->
    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
    <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
    <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>.header {
     background-color: #fff; /* Màu nền sáng */
@@ -25,7 +27,443 @@
     display: flex;
     align-items: center; /* Canh giữa theo chiều dọc */
     justify-content: space-between; /* Tách đều giữa các phần tử */
-}</style>
+}
+/* Main Container Styles */
+.contact {
+    padding: 40px 0;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+}
+
+/* Table Grid Layout */
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Individual Table Styles */
+.table {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.table:not([style*="not-allowed"]):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.table h2 {
+    color: #34495e;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.table p {
+    color: #7f8c8d;
+    margin: 5px 0;
+}
+
+/* Table Status Styles */
+.table[style*="not-allowed"] {
+    opacity: 0.7;
+    background-color: #f3f4f6 !important;
+}
+
+.table[data-status="not_available"],
+.table[data-status="reserved"] {
+    background-color: #ffebee !important;
+    cursor: not-allowed !important;
+    border-color: #ffcdd2;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* Form Styles */
+#reservationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#reservationForm label {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+#reservationForm input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#reservationForm input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"] {
+    background-color: #2ecc71;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+button[type="button"] {
+    background-color: #e74c3c;
+    color: white;
+}
+
+button[type="button"]:hover {
+    background-color: #c0392b;
+}
+
+/* Available Times List Styles */
+.scrollable {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#availableTimesList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#availableTimesList li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+#availableTimesList li:last-child {
+    border-bottom: none;
+}
+
+/* Cancel Reservation Button */
+.table button {
+    margin-top: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.table button:hover {
+    background-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        flex-direction: column;
+    }
+    
+    .table-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+/* Main Container Styles */
+.contact {
+    padding: 40px 0;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    background-image: linear-gradient(to bottom right, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Table Grid Layout */
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+/* Enhanced Table Styles */
+.table {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    border: 2px solid #e1e8ed;
+    overflow: hidden;
+}
+
+/* Table Shape and Design */
+.table::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 60%;
+    background: #f8f9fa;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    border: 2px solid #e1e8ed;
+}
+
+/* Table Number Badge */
+.table h2 {
+    position: relative;
+    color: #34495e;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    z-index: 1;
+    background: #fff;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Status Indicator */
+.table p {
+    position: relative;
+    z-index: 1;
+    color: #7f8c8d;
+    margin: 8px 0;
+    font-weight: 500;
+}
+
+/* Available Table Style */
+.table:not([data-status="not_available"]):not([data-status="reserved"]):hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-color: #3498db;
+}
+
+.table:not([data-status="not_available"]):not([data-status="reserved"])::after {
+    content: '👆 Nhấn để đặt bàn';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #3498db;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.table:not([data-status="not_available"]):not([data-status="reserved"]):hover::after {
+    opacity: 1;
+}
+
+/* Not Available Table Style */
+.table[data-status="not_available"] {
+    background-color: #fff5f5;
+    border-color: #feb2b2;
+    cursor: not-allowed;
+}
+
+.table[data-status="not_available"]::before {
+    background-color: #fed7d7;
+    border-color: #feb2b2;
+}
+
+.table[data-status="not_available"]::after {
+    content: '⛔ Bàn không khả dụng';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #e53e3e;
+}
+
+/* Reserved Table Style */
+.table[data-status="reserved"] {
+    background-color: #ebf8ff;
+    border-color: #90cdf4;
+    cursor: not-allowed;
+}
+
+.table[data-status="reserved"]::before {
+    background-color: #bee3f8;
+    border-color: #90cdf4;
+}
+
+.table[data-status="reserved"]::after {
+    content: '🕒 Đã được đặt';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #2b6cb0;
+}
+
+/* Your Current Reserved Table */
+.table[style*="a8e6cf"] {
+    background-color: #f0fff4 !important;
+    border-color: #68d391 !important;
+}
+
+.table[style*="a8e6cf"]::before {
+    background-color: #c6f6d5 !important;
+    border-color: #68d391 !important;
+}
+
+.table[style*="a8e6cf"]::after {
+    content: '✅ Bàn của bạn';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #2f855a;
+}
+
+/* Cancel Reservation Button */
+.table button {
+    position: relative;
+    z-index: 1;
+    margin-top: 15px;
+    background-color: #e53e3e;
+    color: white;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.table button:hover {
+    background-color: #c53030;
+    transform: scale(1.05);
+}
+
+/* Reservation Time Display */
+.table p:nth-of-type(2),
+.table p:nth-of-type(3) {
+    font-size: 0.9rem;
+    color: #4a5568;
+    background: rgba(255,255,255,0.8);
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin: 3px 0;
+}
+
+/* Status Badge */
+.table p:first-of-type {
+    background: #edf2f7;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Modal Styles remain the same... */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .table {
+        padding: 20px;
+    }
+    
+    .table::before {
+        width: 70%;
+        height: 50%;
+    }
+}
+</style>
 </head>
 <body>
    
@@ -119,18 +557,23 @@
             // Kiểm tra nếu đây là bàn người dùng đang đặt
             $isCurrentReservation = isset($currentReservation) && $currentReservation->ban_an_id == $table->id;
         @endphp
-        <div class="table" 
-             id="table{{ $table->id }}" 
-             style="background-color: {{ $isCurrentReservation ? '#a8e6cf' : ($currentReservation ? '#f3f4f6' : '#ffffff') }}; cursor: {{ $isCurrentReservation ? 'default' : ($currentReservation ? 'not-allowed' : 'pointer') }};"
-             onclick="{{ $isCurrentReservation ? 'cancelReservation(\'' . $currentReservation->id . '\')' : ($currentReservation ? 'showAlert();' : "openModal('{$table->id}')") }}">
-            <h2>{{ $table->ten_ban }}</h2>
-            <p>Status: {{ ucfirst(str_replace('_', ' ', $table->status)) }}</p>
-            @if ($isCurrentReservation)
-                <p> {{ $currentReservation->thoi_gian_dat }}</p>
-                <p> {{ $currentReservation->thoi_gian_roi }}</p>
-                <button onclick="cancelReservation('{{ $currentReservation->id }}')">Hủy Đặt</button>
-            @endif
-        </div>
+       <div class="table" 
+    data-status="{{ $table->status }}"
+    id="table{{ $table->id }}" 
+    style="background-color: {{ $isCurrentReservation ? '#a8e6cf' : ($currentReservation ? '#f3f4f6' : '#ffffff') }}; 
+           cursor: {{ $table->status === 'not_available' || $table->status === 'reserved' ? 'not-allowed' : ($isCurrentReservation ? 'default' : 'pointer') }};"
+    onclick="
+        {{ $table->status === 'not_available' || $table->status === 'reserved' ? 'showAlert()' : ($isCurrentReservation ? "cancelReservation('{$currentReservation->id}')" : "openModal('{$table->id}')") }}
+    ">
+    <h2>{{ $table->ten_ban }}</h2>
+    <p>Status: {{ ucfirst(str_replace('_', ' ', $table->status)) }}</p>
+    @if ($isCurrentReservation)
+        <p>{{ $currentReservation->thoi_gian_dat }}</p>
+        <p>{{ $currentReservation->thoi_gian_roi }}</p>
+        <button onclick="cancelReservation('{{ $currentReservation->id }}')">Hủy Đặt</button>
+    @endif
+</div>
+
     @endforeach
 </div>
 
@@ -174,7 +617,63 @@
 </div>
 
 
+</section>
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Thông tin liên hệ -->
+        <div class="footer-section">
+            <h3>Liên Hệ</h3>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
+            <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
+        </div>
 
+        <!-- Dịch vụ -->
+        <div class="footer-section">
+            <h3>Dịch Vụ</h3>
+            <ul>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
+            </ul>
+        </div>
+
+        <!-- Hỗ trợ -->
+        <div class="footer-section">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Hướng dẫn đặt món</a></li>
+                <li><a href="#">Chính sách & Quy định</a></li>
+                <li><a href="#">Phản hồi & Góp ý</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Đăng Ký Nhận Tin</h3>
+            <p>Nhận thông tin về thực đơn và khuyến mãi mới nhất</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
+    </div>
+</footer>
 <script>
   const startTimeInput = document.getElementById("startTime");
 const endTimeInput = document.getElementById("endTime");
@@ -402,11 +901,13 @@ function openModal(tableId) {
     });
 }
 
+function showAlert() {
+    alert('Bàn này hiện không khả dụng hoặc đã được đặt trước.');
+}
 
 </script>
 
 
-</section>
 
 
 
@@ -433,47 +934,13 @@ function openModal(tableId) {
 
 
 
-<footer class="footer">
 
-   <section class="box-container">
 
-      <div class="box">
-         <img src="images/email-icon.png" alt="">
-         <h3>our email</h3>
-         <a href="mailto:shaikhanas@gmail.com">shaikhanas@gmail.com</a>
-         <a href="mailto:anasbhai@gmail.com">anasbhai@gmail.com</a>
-      </div>
 
-      <div class="box">
-         <img src="images/clock-icon.png" alt="">
-         <h3>opening hours</h3>
-         <p>00:07am to 00:10pm </p>
-      </div>
 
-      <div class="box">
-         <img src="images/map-icon.png" alt="">
-         <h3>our address</h3>
-         <a href="https://www.google.com/maps">mumbai, india - 400104</a>
-      </div>
-
-      <div class="box">
-         <img src="images/phone-icon.png" alt="">
-         <h3>our number</h3>
-         <a href="tel:1234567890">+123-456-7890</a>
-         <a href="tel:1112223333">+111-222-3333</a>
-      </div>
-
-   </section>
-
-   <div class="credit">&copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!</div>
-
-</footer>
-
+<script src="js/script.js"></script>
 <div class="loader">
    <img src="images/loader.gif" alt="">
 </div>
-
-<script src="js/script.js"></script>
-
 </body>
 </html>

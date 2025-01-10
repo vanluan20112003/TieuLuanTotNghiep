@@ -21,6 +21,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\NutritionAnalysisController;
 use App\Http\Controllers\importController;
 use App\Http\Controllers\SpinHistoryController;
 use App\Http\Controllers\SpinController;
@@ -110,6 +111,9 @@ Route::get('/about', [UserController::class, 'about']);
 Route::get('/log-users', [UserController::class, 'getUserLog']);
 Route::get('/payment', function () {
     return view('payment');
+});
+Route::get('/3d', function () {
+    return view('3d');
 });
 Route::post('/maintenance/start', function () {
     Artisan::call('down'); // Kích hoạt chế độ bảo trì
@@ -241,6 +245,7 @@ Route::get('/check-login', function() {
     return response()->json(['isLoggedIn' => Auth::check()]);
 })->name('check.login');
 Route::get('/test-mail', [HomeController::class, 'testEmail']);
+
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
 Route::get('/contact', [BanAnController::class, 'index']);
@@ -252,6 +257,11 @@ Route::post('/discount/send', [DiscountController::class, 'sendDiscount']);
 Route::prefix('admin')->middleware(['auth', CheckAdmin::class])->group(function () {
     Route::get('/dashboard', [AdminDashBoardController::class, 'index'])->name('admin.dashboard');
 });
+
+
+Route::get('/nutrition-analysis', [NutritionAnalysisController::class, 'index'])->name('nutrition.analysis')->middleware('auth');
+
+
 Route::get('/post', [PostController::class, 'index'])->name('post');
 Route::get('/post_detail/{id}', [PostController::class, 'show'])->name('post_detail');
 Route::get('/comments/{comment_id}/replies', [CommentController::class, 'getReplies'])->name('comment.replies'); // Sử dụng CommentController để lấy reply

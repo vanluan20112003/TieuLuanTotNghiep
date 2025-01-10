@@ -311,8 +311,43 @@ public function changeStatus(Request $request)
         'admin_id' => auth::id(),
     ]);
 
+    // Gửi thông báo cho người dùng
+    $user = $order->user;
+
+    if ($newStatus === 'processing' && $oldStatus === 'pending') {
+        // Nếu shipping_id là null
+        if ($order->shipping_id === null) {
+            // Gửi thông báo về việc đơn hàng được duyệt và người dùng đến căn tin
+            Notification::create([
+                'user_id' => $user->id,
+                'content' => "Đơn hàng của bạn đã được duyệt. Vui lòng đến căn tin.",
+                'type' => 'notification',
+                'is_user_read' => 0, // Đánh dấu là chưa đọc
+            ]);
+        } else {
+            $shipping = $order->shipping;  // Lấy thông tin shipping
+           Notification::create([
+                'user_id' => $user->id,
+                'content' => "Đơn hàng của bạn đã được duyệt. Vui lòng chuẩn bị để nhận hàng ở  {$shipping->room_name}.",
+                'type' => 'notification',
+                'is_user_read' => 0, // Đánh dấu là chưa đọc
+            ]);
+        }
+    }
+
+    if ($newStatus === 'completed' && $oldStatus === 'processing') {
+        // Gửi thông báo về việc đơn hàng đã hoàn thành
+        Notification::create([
+            'user_id' => $user->id,
+            'content' => "Đơn hàng của bạn đã được hoàn thành. Nếu có thắc mắc gì vui lòng báo cáo lại cho căn tin.",
+            'type' => 'notification',
+            'is_user_read' => 0, // Đánh dấu là chưa đọc
+        ]);
+    }
+
     return response()->json(['message' => 'Cập nhật trạng thái thành công!']);
 }
+
 
 
 // Hủy đơn hàng

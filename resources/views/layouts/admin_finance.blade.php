@@ -3590,7 +3590,7 @@ table th {
 </a>
         </div>
     </div>
-    <a href="http://localhost/web_ban_banh_kem/public/admin/user">
+    <a href="http://localhost/web_ban_banh_kem/public/admin/order">
     <div class="menu-item">
         📦 Quản lý đơn hàng
     </div>

@@ -12,6 +12,8 @@
    <!-- Custom CSS File Link -->
    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
    <link rel="stylesheet" href="{{ asset('css/search.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
 
    <style>
     .category .box-container {
@@ -649,6 +651,7 @@
 }
 
 </style>
+
 <script src="js/script.js"></script>
 <!-- AJAX Script để tìm kiếm theo thời gian thực -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

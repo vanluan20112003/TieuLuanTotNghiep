@@ -2487,9 +2487,7 @@ a:hover {
     </button>
 
 
-    <button class="toolbar-btn" onclick="openHistoryModal()">
-        <i class="fas fa-history"></i> Lịch sử
-    </button>
+
 </div>
         <div class="coupons-users-container">
             <!-- Danh sách phiếu khuyến mãi -->
@@ -2668,8 +2666,17 @@ let allCoupons = [];
                     <div class="dropdown">
                         <button class="more-options">⋮</button>
                         <ul class="dropdown-menu">
-                            <li><button class="edit-discount">Sửa</button></li>
-                            <li><button class="stop-discount">Dừng khuyến mãi</button></li>
+                           <li>
+    <button class="edit-discount" style="color: white; background-color: #007bff; border: 1px solid #007bff; padding: 8px 12px; border-radius: 4px; font-size: 14px; cursor: pointer;">
+        Sửa
+    </button>
+</li>
+<li>
+    <button class="stop-discount" style="color: white; background-color: #dc3545; border: 1px solid #dc3545; padding: 8px 12px; border-radius: 4px; font-size: 14px; cursor: pointer;">
+        Dừng khuyến mãi
+    </button>
+</li>
+
                         </ul>
                     </div>
                 `;
@@ -3172,9 +3179,26 @@ function showAddDiscountModal() {
             </div>
         </div>
     `;
+
+    // Thêm modal vào body
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // Sự kiện nút Lưu (đặt trong showAddDiscountModal)
+    // Hàm đóng modal
+    function closeModal() {
+        document.getElementById('modal-overlay-add-discount').remove();
+        document.getElementById('add-discount-modal').remove();
+    }
+
+    // Sự kiện cho nút "✖"
+    document.getElementById('close-modal-add-discount').addEventListener('click', closeModal);
+
+    // Sự kiện cho nút "Hủy"
+    document.getElementById('cancel-modal-add-discount').addEventListener('click', closeModal);
+
+    // Sự kiện khi nhấp vào overlay
+    document.getElementById('modal-overlay-add-discount').addEventListener('click', closeModal);
+
+    // Sự kiện nút Lưu
     document.getElementById('save-adddiscount').addEventListener('click', () => {
         const name = document.getElementById('add-discount-name').value;
         const type = document.getElementById('add-discount-type').value;
@@ -3215,20 +3239,10 @@ function showAddDiscountModal() {
             })
             .catch(error => console.error('Lỗi khi thêm phiếu giảm giá:', error));
     });
-
-   
 }
 
-
 // Đóng modal khi bấm "Hủy" hoặc "X" trên modal
-document.getElementById('cancel-modal-add-discount').addEventListener('click', () => {
-    document.getElementById('modal-add-discount').style.display = 'none';
-    document.getElementById('modal-overlay-add-discount').style.display = 'none';
-});
-document.getElementById('close-modal-add-discount').addEventListener('click', () => {
-    document.getElementById('modal-add-discount').style.display = 'none';
-    document.getElementById('modal-overlay-add-discount').style.display = 'none';
-});
+
 
 
 

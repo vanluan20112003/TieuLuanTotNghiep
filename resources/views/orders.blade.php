@@ -12,6 +12,8 @@
    <!-- custom css file link  -->
    <link rel="stylesheet" href="{{ asset('css/order.css') }}">
    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
   
 
 <style>.header {
@@ -578,39 +580,60 @@
 
 
 <footer class="footer">
+    <div class="footer-content">
+        <!-- Thông tin liên hệ -->
+        <div class="footer-section">
+            <h3>Liên Hệ</h3>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
+            <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
+        </div>
 
-   <section class="box-container">
+        <!-- Dịch vụ -->
+        <div class="footer-section">
+            <h3>Dịch Vụ</h3>
+            <ul>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
+            </ul>
+        </div>
 
-      <div class="box">
-         <img src="images/email-icon.png" alt="">
-         <h3>our email</h3>
-         <a href="mailto:shaikhanas@gmail.com">shaikhanas@gmail.com</a>
-         <a href="mailto:anasbhai@gmail.com">anasbhai@gmail.com</a>
-      </div>
+        <!-- Hỗ trợ -->
+        <div class="footer-section">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Hướng dẫn đặt món</a></li>
+                <li><a href="#">Chính sách & Quy định</a></li>
+                <li><a href="#">Phản hồi & Góp ý</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+            </ul>
+        </div>
 
-      <div class="box">
-         <img src="images/clock-icon.png" alt="">
-         <h3>opening hours</h3>
-         <p>00:07am to 00:10pm </p>
-      </div>
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Đăng Ký Nhận Tin</h3>
+            <p>Nhận thông tin về thực đơn và khuyến mãi mới nhất</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
 
-      <div class="box">
-         <img src="images/map-icon.png" alt="">
-         <h3>our address</h3>
-         <a href="https://www.google.com/maps">mumbai, india - 400104</a>
-      </div>
+   
 
-      <div class="box">
-         <img src="images/phone-icon.png" alt="">
-         <h3>our number</h3>
-         <a href="tel:1234567890">+123-456-7890</a>
-         <a href="tel:1112223333">+111-222-3333</a>
-      </div>
-
-   </section>
-
-   <div class="credit">&copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!</div>
-
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
+    </div>
 </footer>
 
 <div class="loader">

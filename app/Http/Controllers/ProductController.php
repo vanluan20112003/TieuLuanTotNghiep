@@ -472,12 +472,12 @@ public function quickView($id)
         ELSE 1 
     END', [$product->category_id]) // Ưu tiên sắp xếp sản phẩm cùng danh mục lên trước
     ->orderByRaw('ABS(price - ?) ASC', [$product->price])
-    ->limit(10)
+    ->limit(20)
     ->get();
 
     // Nếu vẫn chưa đủ 10 sản phẩm, lấy thêm ngẫu nhiên
-    if ($relatedProducts->count() < 10) {
-        $remainingCount = 10 - $relatedProducts->count();
+    if ($relatedProducts->count() < 20) {
+        $remainingCount = 20 - $relatedProducts->count();
         $existingIds = $relatedProducts->pluck('id')->push($product->id)->toArray();
         
         $additionalProducts = Product::where('is_deleted', 0)
@@ -500,7 +500,7 @@ public function quickView($id)
     }
 
     $commentsQuery->orderBy('created_at', 'desc');
-    $comments = $commentsQuery->paginate(2);
+    $comments = $commentsQuery->paginate(10);
 
     // Tính số sao trung bình
     $averageRating = $product->comments()->where('is_block', false)->avg('star_rating');

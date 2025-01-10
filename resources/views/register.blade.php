@@ -13,6 +13,7 @@
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/footer.css">
 <style>
 .alert {
     padding: 15px;
@@ -171,193 +172,7 @@ a:hover {
         margin-bottom: 1.5rem;
     }
 }
-.footer {
-    background: linear-gradient(to right, #f8f9fa, #e9ecef);
-    padding: 4rem 0 1rem;
-    color: #2c3e50;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-}
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    padding: 0 2rem;
-}
-
-.footer-section {
-    margin-bottom: 2rem;
-}
-
-.footer-section h3 {
-    color: #1a365d;
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.footer-section h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50px;
-    height: 2px;
-    background: #3182ce;
-}
-
-.footer-section p {
-    margin: 0.8rem 0;
-    line-height: 1.6;
-}
-
-.footer-section i {
-    margin-right: 0.5rem;
-    color: #3182ce;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.8rem;
-}
-
-.footer-section a {
-    color: #4a5568;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-section a:hover {
-    color: #3182ce;
-}
-
-/* Newsletter form */
-.newsletter-form {
-    display: flex;
-    gap: 0.5rem;
-    margin: 1rem 0;
-}
-
-.newsletter-form input {
-    flex: 1;
-    padding: 0.8rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.newsletter-form input:focus {
-    border-color: #3182ce;
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-}
-
-.newsletter-form button {
-    padding: 0.8rem 1.5rem;
-    background: #3182ce;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.newsletter-form button:hover {
-    background: #2c5282;
-    transform: translateY(-2px);
-}
-
-/* Social Links */
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.social-links a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: white;
-    border-radius: 50%;
-    color: #3182ce;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.social-links a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(49, 130, 206, 0.3);
-    background: #3182ce;
-    color: white;
-}
-
-/* Certification */
-.certification {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 2rem 0;
-    padding: 1rem 0;
-    border-top: 1px solid #e2e8f0;
-}
-
-.certification img {
-    height: 50px;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.certification img:hover {
-    opacity: 1;
-}
-
-/* Copyright */
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #e2e8f0;
-    color: #718096;
-    font-size: 0.9rem;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .footer {
-        padding: 3rem 0 1rem;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .newsletter-form {
-        flex-direction: column;
-    }
-
-    .certification {
-        flex-direction: column;
-        align-items: center;
-    }
-}
 </style>
 </head>
 <body>
@@ -441,10 +256,10 @@ a:hover {
         <!-- Thông tin liên hệ -->
         <div class="footer-section">
             <h3>Liên Hệ</h3>
-            <p><i class="fas fa-hospital"></i> Căn tin Bệnh viện XYZ</p>
+            <p><i class="fas fa-hospital"></i> Căn tin Luan Hospital</p>
             <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận X, TP.HCM</p>
-            <p><i class="fas fa-phone"></i> Hotline: 1900-xxxx</p>
-            <p><i class="fas fa-envelope"></i> Email: cantin@benhvienxyz.com</p>
+            <p><i class="fas fa-phone"></i> Hotline: 03522312710352231271</p>
+            <p><i class="fas fa-envelope"></i> Email: levanluan20112003@gmail.comcom</p>
             <p><i class="fas fa-clock"></i> Giờ mở cửa: 6:00 - 20:00</p>
         </div>
 
@@ -452,11 +267,9 @@ a:hover {
         <div class="footer-section">
             <h3>Dịch Vụ</h3>
             <ul>
-                <li><a href="#">Thực đơn hàng ngày</a></li>
-                <li><a href="#">Đặt món trực tuyến</a></li>
-                <li><a href="#">Suất ăn bệnh nhân</a></li>
-                <li><a href="#">Dịch vụ tiệc</a></li>
-                <li><a href="#">Combo tiết kiệm</a></li>
+                <li><a href="/menu">Thực đơn hàng ngày</a></li>
+                <li><a href="/menu">Đặt món trực tuyến</a></li>
+                
             </ul>
         </div>
 
@@ -481,10 +294,8 @@ a:hover {
                 <button type="submit">Đăng ký</button>
             </form>
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.facebook.com/vanluan.le.52056"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@vanluanle5796"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
     </div>
@@ -493,7 +304,7 @@ a:hover {
 
     <!-- Copyright -->
     <div class="footer-bottom">
-        <p>© 2024 Căn tin Bệnh viện XYZ. Tất cả quyền được bảo lưu.</p>
+        <p>© 2024 Căn tin Luan HospitalHospital. Tất cả quyền được bảo lưu.</p>
     </div>
 </footer>
 

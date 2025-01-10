@@ -2317,10 +2317,16 @@ button.btn:hover {
     <button class="toolbar-btn excel-export-btn">
         <i class="fas fa-file-excel"></i> Xuất Excel
     </button>
-    <div class="excel-options" style="display: none;">
-        <button id="exportAll" class=" btn-success">In tất cả</button>
-        <button id="exportSelected"class=" btn-success">In đã chọn</button>
-    </div>
+    <div class="excel-options" style="display: none; color: black; background-color: white;">
+    <button id="exportAll" style="color: white; background-color: #007bff; border: 1px solid #007bff; padding: 10px; border-radius: 5px;">
+        In tất cả
+    </button>
+    <button id="exportSelected" style="color: white; background-color: #28a745; border: 1px solid #28a745; padding: 10px; border-radius: 5px;">
+        In đã chọn
+    </button>
+</div>
+
+
     <button class="toolbar-btn" onclick="openModal()">
         <i class="fas fa-warehouse"></i>
         Nhập kho
